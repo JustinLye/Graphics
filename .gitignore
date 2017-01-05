@@ -1,0 +1,6 @@
+images/*
+keepsake/*
+*.sln
+*.VC.db
+*vcxproj*
+*Debug*
