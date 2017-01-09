@@ -28,7 +28,7 @@ GLfloat lastFrame = 0.0f;
 GLboolean firstMouse = true;
 GLfloat lastX = 400.0f;
 GLfloat lastY = 300.0f;
-jlg::Camera camera;
+jlg::Camera camera(glm::vec3(0.0f, 0.0f,3.0f));
 int main(int argc, char* argv[]) {
 	//initalize GLFW
 	glfwInit();
@@ -60,7 +60,6 @@ int main(int argc, char* argv[]) {
 	GLuint texture1, VAO, VBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-	glGenTextures(1, &texture1);
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, 180 * sizeof(GLfloat), cube.Data(), GL_STATIC_DRAW);
@@ -71,6 +70,7 @@ int main(int argc, char* argv[]) {
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	glGenTextures(1, &texture1);
 	glBindTexture(GL_TEXTURE_2D, texture1);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -84,6 +84,9 @@ int main(int argc, char* argv[]) {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	jlg::Shader shader("shaders/cube.vs", "shaders/cube.frag");
 	RenderWindow(window, cube, shader, texture1, VAO, screenWidth, screenHeight);
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	
 	return EXIT_SUCCESS;
 }
 
@@ -98,11 +101,10 @@ void RenderWindow(GLFWwindow* window, const jlg::shapes::Shape& shape,  jlg::Sha
 		DoMovement();
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		shader.UseProgram();
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
 		glUniform1i(glGetUniformLocation(shader.Program, "texture1"),0);
-		shader.UseProgram();
-
 		glm::mat4 view;
 		view = camera.GetViewMatrix();
 		glm::mat4 projection;
@@ -127,9 +129,9 @@ void RenderWindow(GLFWwindow* window, const jlg::shapes::Shape& shape,  jlg::Sha
 void DoMovement() {
 	if(keys[GLFW_KEY_W])
 		camera.ProcessKeyboard(jlg::FORWARD, deltaTime);
-	if(keys[GLFW_KEY_D])
-		camera.ProcessKeyboard(jlg::BACK, deltaTime);
 	if(keys[GLFW_KEY_S])
+		camera.ProcessKeyboard(jlg::BACK, deltaTime);
+	if(keys[GLFW_KEY_A])
 		camera.ProcessKeyboard(jlg::LEFT, deltaTime);
 	if(keys[GLFW_KEY_D])
 		camera.ProcessKeyboard(jlg::RIGHT, deltaTime);

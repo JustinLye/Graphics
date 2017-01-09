@@ -2,5 +2,6 @@ images/*
 keepsake/*
 *.sln
 *.VC.db
+*.VC.*
 *vcxproj*
 *Debug*

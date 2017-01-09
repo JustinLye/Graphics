@@ -6,7 +6,7 @@
 #include<glm/gtc/type_ptr.hpp>
 
 namespace jlg {
-	const GLfloat YAW = 90.0f;
+	const GLfloat YAW = -90.0f;
 	const GLfloat PITCH = 0.0f;
 	const GLfloat SPEED = 3.0f;
 	const GLfloat SENSITIVITY = 0.25f;
@@ -40,13 +40,14 @@ namespace jlg {
 		}
 	public:
 		Camera(
-			glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f),
+			glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f),
 			glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
 			GLfloat yaw = YAW,
 			GLfloat pitch = PITCH) :
 			Front(glm::vec3(0.0f, 0.0f, -1.0f)),
 			Speed(SPEED),
-			Sensitivity(SENSITIVITY) {
+			Sensitivity(SENSITIVITY),
+			Zoom(ZOOM) {
 			this->Position = position;
 			this->WorldUp = up;
 			this->Yaw = yaw;
@@ -76,9 +77,9 @@ namespace jlg {
 			this->Yaw += xoffset;
 			this->Pitch += yoffset;
 			if (constrainPitch) {
-				if(this->Pitch > 89.0f)
+				if (this->Pitch > 89.0f)
 					this->Pitch = 89.0f;
-				if(this->Pitch < -89.0f)
+				if (this->Pitch < -89.0f)
 					this->Pitch = -89.0f;
 			}
 			this->UpdateCameraVectors();
