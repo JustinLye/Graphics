@@ -37,6 +37,7 @@ int main(int argc, char* argv[]) {
 	glfwWindowHint(GLFW_OPENGL_CORE_PROFILE, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, TITLE, nullptr, nullptr);
+	
 	if (window == nullptr) {
 		std::cerr << "ERROR::INITILIZATION::WINDOW::FAILED TO CREATE WINDOW" << std::endl;
 		glfwTerminate();
