@@ -4,6 +4,9 @@
 #include"Shader.h"
 #include"VertexArrayObject.h"
 #include"camera.h"
+#include<glm/glm.hpp>
+#include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
 namespace jlg {
 	class Window3d;
 	class CallBackWrapper {
@@ -12,7 +15,7 @@ namespace jlg {
 		CallBackWrapper(const CallBackWrapper&) {}
 		CallBackWrapper(CallBackWrapper&&) {}
 		static Window3d* currentWindow;
-		static void SetCurrentWindow(Window3d* window);
+		inline static void SetCurrentWindow(Window3d* window) { currentWindow = window; }
 	protected:
 		static void KeyPressEvent(GLFWwindow* window, int key, int scancode, int action, int mode);
 		static void MouseMoveEvent(GLFWwindow* window, double xpos, double ypos);
@@ -42,9 +45,8 @@ namespace jlg {
 			lastFrame(0.0f),
 			lastX(400.0f),
 			lastY(300.0f),
-			camera(glm::vec3(0.0f, 0.0f, 0.0f)),
+			camera(glm::vec3(0.0f, 0.0f, 3.0f)),
 			firstMouse(false) {
-			SetCallbacks();
 		}
 		Window3d(int Width, const char* vertexShaderPath = nullptr, const char* fragmentShaderPath = nullptr) :
 			Window(Width),
@@ -54,7 +56,6 @@ namespace jlg {
 			lastY(300.0f),
 			camera(glm::vec3(0.0f, 0.0f, 0.0f)),
 			firstMouse(false) {
-			SetCallbacks();
 			if(vertexShaderPath != nullptr && fragmentShaderPath != nullptr)
 				LoadShader(vertexShaderPath, fragmentShaderPath);
 		}
@@ -70,7 +71,6 @@ namespace jlg {
 			lastY(300.0f),
 			camera(glm::vec3(0.0f, 0.0f, 0.0f)),
 			firstMouse(false) {
-			SetCallbacks();
 			if (vertexShaderPath != nullptr && fragmentShaderPath != nullptr)
 				LoadShader(vertexShaderPath, fragmentShaderPath);
 		}
@@ -86,8 +86,7 @@ namespace jlg {
 			lastX(400.0f),
 			lastY(300.0f),
 			camera(glm::vec3(0.0f, 0.0f, 0.0f)),
-			firstMouse(false) {
-			SetCallbacks();
+			firstMouse(true) {
 			if (vertexShaderPath != nullptr && fragmentShaderPath != nullptr)
 				LoadShader(vertexShaderPath, fragmentShaderPath);
 		}
@@ -100,9 +99,8 @@ namespace jlg {
 			lastFrame(0.0f),
 			lastX(400.0f),
 			lastY(300.0f),
-			camera(glm::vec3(0.0f, 0.0f, 0.0f)),
-			firstMouse(false) {
-			SetCallbacks();
+			camera(glm::vec3(0.0f, 0.0f, 3.0f)),
+			firstMouse(true) {
 			if (vertexShaderPath != nullptr && fragmentShaderPath != nullptr)
 				LoadShader(vertexShaderPath, fragmentShaderPath);
 			std::cout << "Window3d constructor" << std::endl;
@@ -110,9 +108,11 @@ namespace jlg {
 		Window3d(const char* vertexShaderPath, const char* fragmentShaderPath) : Window() {
 			LoadShader(vertexShaderPath, fragmentShaderPath);
 		}
-		virtual void Render();
+		virtual void Render(GLfloat DeltaTime);
 		void LoadShader(const char* vertexShaderPath, const char* fragmentShaderPath);
 		void LoadVertexArrayObject(const char* imagePath);
+		void Initialize();
+
 	};
 };
 

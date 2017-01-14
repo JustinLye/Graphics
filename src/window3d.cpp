@@ -1,8 +1,5 @@
 #include"window3d.h"
 jlg::Window3d* jlg::CallBackWrapper::currentWindow = nullptr;
-void jlg::CallBackWrapper::SetCurrentWindow(Window3d* window) {
-	currentWindow = window;
-}
 
 void jlg::CallBackWrapper::BindCallBackEvents(Window3d* window) {
 	window->SetCallback(KeyPressEvent);
@@ -45,7 +42,7 @@ void jlg::CallBackWrapper::DoMovement() {
 	if (currentWindow->keys[GLFW_KEY_W])
 		currentWindow->camera.ProcessKeyboard(FORWARD, currentWindow->deltaTime);
 	if (currentWindow->keys[GLFW_KEY_S])
-		currentWindow->camera.ProcessKeyboard(BACK, currentWindow->deltaTime);
+		currentWindow->camera.ProcessKeyboard(BACKWARD, currentWindow->deltaTime);
 	if (currentWindow->keys[GLFW_KEY_A])
 		currentWindow->camera.ProcessKeyboard(LEFT, currentWindow->deltaTime);
 	if (currentWindow->keys[GLFW_KEY_D])
@@ -57,32 +54,29 @@ void jlg::CallBackWrapper::HandleCallBackEvents(Window3d* window, bool ManageCon
 	if (ManageContext) {
 		GLFWwindow* origWindow = glfwGetCurrentContext();
 		glfwMakeContextCurrent(currentWindow->window());
-		glfwPollEvents();
 		DoMovement();
+		glfwPollEvents();
+		
 		glfwMakeContextCurrent(origWindow);
 	} else {
-		glfwPollEvents();
 		DoMovement();
+		glfwPollEvents();
+		
 	}
 	SetCurrentWindow(nullptr);
 }
 
-void jlg::Window3d::Render() {
-	GLfloat currentFrame = glfwGetTime();
-	deltaTime = currentFrame - lastFrame;
-	lastFrame = currentFrame;
-	GLFWwindow* currWindow = glfwGetCurrentContext();
-	glfwMakeContextCurrent(winPtr);
+void jlg::Window3d::Render(GLfloat DeltaTime) {
+	deltaTime = DeltaTime;
 	CallBackWrapper::HandleCallBackEvents(this);
 	//check if window should close. If true then destroy the window and return immediately
 	if (glfwWindowShouldClose(winPtr)) {
-		if (winPtr == currWindow) {
+		if (winPtr == glfwGetCurrentContext()) {
 			Destroy();
 			glfwMakeContextCurrent(NULL);
 			return;
 		} else {
 			Destroy();
-			glfwMakeContextCurrent(currWindow);
 			return;
 		}
 	}
@@ -93,11 +87,11 @@ void jlg::Window3d::Render() {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, vao.texID);
 	glUniform1i(glGetUniformLocation(shader.Program, "texture0"),0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glBindTexture(GL_TEXTURE_2D, 0);
 	glm::mat4 view;
 	view = camera.GetViewMatrix();
 	glm::mat4 projection;
-	projection = glm::perspective(camera.GetZoom(), (float)info.width/(float)info.height, 1.0f, 1000.0f);
+	projection = glm::perspective(camera.Zoom, (float)info.width/(float)info.height, .01f, 1000.0f);
 	GLuint modelLoc = glGetUniformLocation(shader.Program, "model");
 	GLuint viewLoc = glGetUniformLocation(shader.Program, "view");
 	GLuint projLoc = glGetUniformLocation(shader.Program, "projection");
@@ -111,7 +105,6 @@ void jlg::Window3d::Render() {
 	glDrawArrays(GL_TRIANGLES, 0, vao.cube.VertexCount());
 	glBindVertexArray(0);
 	glfwSwapBuffers(winPtr);
-	glfwMakeContextCurrent(currWindow);
 }
 
 void jlg::Window3d::LoadShader(const char* vertexShaderPath, const char* fragmentShaderPath) {
@@ -123,7 +116,19 @@ void jlg::Window3d::LoadVertexArrayObject(const char* imagePath) {
 }
 
 void jlg::Window3d::SetCallbacks() {
+	GLFWwindow* origWindow = glfwGetCurrentContext();
 	CallBackWrapper::BindCallBackEvents(this);
+}
+
+void jlg::Window3d::Initialize() {
+	if(!IsCreated())
+		Create();
+	for(int i = 0; i < 1024; i++)
+		keys[i] = false;
+	glfwMakeContextCurrent(winPtr);
+	SetCallbacks();
+	deltaTime = 0.0f;
+	lastFrame = 0.0f;
 }
 
 

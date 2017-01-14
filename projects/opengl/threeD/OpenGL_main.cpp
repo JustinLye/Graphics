@@ -16,12 +16,22 @@ void RenderLoop(GLFWwindow* window);
 void KeyPressEvent(GLFWwindow* window, GLint key, GLint scancode, GLint action, GLint mode);
 int main(int argc, char* argv[]) {
 	jlg::Window3d window("window1");
-	//window.LoadShader("threed.vs", "threed.frag");
-	//window.LoadVertexArrayObject("container.jpg");
-
-	std::cout << "window constructed" << std::endl;
+	window.Initialize();
+	window.SetClearColor(0.3f, 0.4f, 0.3f, 1.0f);
+	window.LoadShader("threed.vs", "threed.frag");
+	window.LoadVertexArrayObject("container.jpg");
+	GLfloat deltaTime = 0.0f;
+	GLfloat currentFrame = 0.0f;
+	GLfloat lastFrame = 0.0f;
+	glfwMakeContextCurrent(window.window());
+	glfwSetInputMode(window.window(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	while (window.IsActive()) {
+		currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+		window.Render(deltaTime);
+	}
 	glfwTerminate();
-	std::cout << "after glfwTerminate" << std::endl;
 	return EXIT_SUCCESS;
 }
 

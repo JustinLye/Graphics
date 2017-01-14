@@ -12,9 +12,11 @@ namespace jlg {
 		VertexArrayObject(const char* imagePath);
 		~VertexArrayObject() {
 			std::cout << "vertex array destructor" << std::endl;
-			//glDeleteVertexArrays(1, &VAO);
-			//glDeleteBuffers(1, &VBO);
-			//glDeleteTextures(1, &texID);
+			if (initialized) {
+				glDeleteVertexArrays(1, &VAO);
+				glDeleteBuffers(1, &VBO);
+				glDeleteTextures(1, &texID);
+			}
 			std::cout << "finished vertex array destructor" << std::endl;
 		}
 		
