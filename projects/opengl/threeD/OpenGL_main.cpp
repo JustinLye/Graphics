@@ -6,7 +6,7 @@
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
 #include<SOIL2/SOIL2.h>
-#include"window.h"
+#include"window3d.h"
 
 GLuint WIDTH = 800, HEIGHT = 600;
 GLint screenWidth, screenHeight;
@@ -15,12 +15,13 @@ const GLchar* TITLE = "OpenGL Window";
 void RenderLoop(GLFWwindow* window);
 void KeyPressEvent(GLFWwindow* window, GLint key, GLint scancode, GLint action, GLint mode);
 int main(int argc, char* argv[]) {
-    jlg::WinGroup<jlg::Window> wgrp;
-	wgrp.PushBack("OpenGL window");
-	while(wgrp.IsActive())
-		wgrp.Render();
+	jlg::Window3d window("window1");
+	//window.LoadShader("threed.vs", "threed.frag");
+	//window.LoadVertexArrayObject("container.jpg");
 
+	std::cout << "window constructed" << std::endl;
 	glfwTerminate();
+	std::cout << "after glfwTerminate" << std::endl;
 	return EXIT_SUCCESS;
 }
 

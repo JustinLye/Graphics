@@ -9,7 +9,9 @@
 namespace jlg {
 	enum JLGenum {
 		WIN_DEFAULT_WIDTH = 600,
-		WIN_DEFAULT_HEIGHT = 400
+		WIN_DEFAULT_HEIGHT = 400,
+		WIN_CALLBACK_CURPOS_FUN = 0,
+		WIN_CALLBACK_SCROLL_FUN = 1
 		//WIN_CALLBACK_INPUT_KEY = 0,
 		//WIN_CALLBACK_INPUT_MOUSEMV,
 		//WIN_CALLBACK_INPUT_MOUSESR
@@ -76,6 +78,7 @@ namespace jlg {
 		virtual void Render();
 		void SetCallback(GLFWkeyfun cbfun);
 		void SetCallback(GLFWwindowclosefun cbfun);
+		void SetCallback(GLFWcursorposfun cbfun, JLGenum FunType = WIN_CALLBACK_CURPOS_FUN);
 		//member variable access
 		inline GLFWwindow* window() { return winPtr; }
 		inline bool IsCreated() const { return created; }

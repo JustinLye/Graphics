@@ -2,8 +2,7 @@
 #define GLEW_STATIC
 #include<GL/glew.h>
 #include<GLFW/glfw3.h>
-
-
+#include"SOIL2\SOIL2.h"
 
 namespace jlg {
 	class Shape {
@@ -23,6 +22,7 @@ namespace jlg {
 		inline GLfloat VertexDim() const { return vertexDim; }
 		inline GLfloat VertexCount() const { return vertexCount; }
 		inline GLsizei Stride() const { return vertexDim * sizeof(GLfloat); }
+		inline GLsizeiptr Size() const { return elementCount * sizeof(GLfloat); }
 	};
 
 	class Cube : public Shape {

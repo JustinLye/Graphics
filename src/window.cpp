@@ -87,6 +87,14 @@ void jlg::Window::SetCallback(GLFWwindowclosefun cbfun) {
 	glfwSetWindowCloseCallback(winPtr, cbfun);
 }
 
+void jlg::Window::SetCallback(GLFWcursorposfun cbfun, jlg::JLGenum FunType) {
+	if(FunType == WIN_CALLBACK_CURPOS_FUN)
+		glfwSetCursorPosCallback(winPtr, cbfun);
+	else if(FunType == WIN_CALLBACK_SCROLL_FUN)
+		glfwSetScrollCallback(winPtr, cbfun);
+}
+
+
 void jlg::Window::Destroy() {
 	if (!created) {
 		std::cerr << "ERROR::WINDOW::DESTROY::A window must be created before it is destroyed" << std::endl;

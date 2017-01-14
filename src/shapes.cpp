@@ -1,4 +1,4 @@
-#include"shapes.h"
+#include"..\include\shapes.h"
 
 jlg::Shape::Shape(GLfloat VertexDim, GLfloat VertexCount) :
 	vertexDim(VertexDim),
