@@ -11,7 +11,16 @@ namespace jlg {
 	public:
 		GLuint Program;
 		Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
-		inline void UseProgram() const { glUseProgram(this->Program); }
+		Shader();
+		inline void UseProgram() const { 
+			if (initialized) {
+				glUseProgram(this->Program);
+			} else {
+				std::cerr << "ERROR::SHADERS::INITIALIZATION::SHADER IS NOT INITIALIZED" << std::endl;
+				throw;
+			}
+		}
+		void InitializeShaderProgram(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
 	protected:
 		void LoadVertexShader(const GLchar* vertexShaderSourceCode);
 		void LoadFragmentShader(const GLchar* fragmentShaderSourceCode);
@@ -19,5 +28,7 @@ namespace jlg {
 	private:
 		GLuint vertexShaderID;
 		GLuint fragementShaderID;
+		bool initialized;
+		
 	};
 };

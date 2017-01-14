@@ -1,7 +1,14 @@
-#include"shader.h"
+#include"..\include\Shader.h"
 
-jlg::Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) {
-	
+jlg::Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) :
+	initialized(false) {
+	InitializeShaderProgram(vertexShaderPath, fragmentShaderPath);
+}
+
+jlg::Shader::Shader() : initialized(false) {}
+
+void jlg::Shader::InitializeShaderProgram(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) {
+	initialized = false;
 	std::string vertexShaderSourceCode;
 	std::string fragmentShaderSourceCode;
 	jlg::FileContentToString(vertexShaderPath, vertexShaderSourceCode);
@@ -12,10 +19,11 @@ jlg::Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShader
 	if (fragmentShaderSourceCode.empty()) {
 		std::cerr << "ERROR::SHADERS::FRAGMENT::FAILED TO READ SOURCE" << std::endl;
 	}
-	
+
 	this->LoadVertexShader(vertexShaderSourceCode.c_str());
 	this->LoadFragmentShader(fragmentShaderSourceCode.c_str());
 	this->CreateProgram();
+	initialized = true;
 }
 
 void jlg::Shader::LoadVertexShader(const GLchar* vertexShaderSourceCode) {

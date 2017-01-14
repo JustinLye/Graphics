@@ -1,4 +1,4 @@
-#include"freader.h"
+#include"..\include\freader.h"
 
 //Reads file content into character array. Returns nullptr if error occurs.
 void jlg::FileContentToString(const char* filepath, std::string& content) {
