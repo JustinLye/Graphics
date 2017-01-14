@@ -9,20 +9,22 @@ namespace jlg {
 	protected:
 		//member variables
 		GLsizeiptr size;
-		GLfloat vertexDim; //number of elemnts per vertex
-		GLfloat vertexCount; //total number of vertices
-		GLfloat elementCount; //total elements in vertex data array
+		GLuint vertexDim; //number of elemnts per vertex
+		GLuint vertexCount; //total number of vertices
+		GLuint elementCount; //total elements in vertex data array
 		GLfloat* vertexData; //vertex data array
 		virtual void AllocateVertexData() = 0;
 
 	public:
-		Shape(GLfloat VertexDim, GLfloat VertexCount);
+		Shape(GLuint VertexDim, GLuint VertexCount);
 		~Shape();
 		inline const GLvoid* VertexData() { return vertexData; }
-		inline GLfloat VertexDim() const { return vertexDim; }
-		inline GLfloat VertexCount() const { return vertexCount; }
-		inline GLsizei Stride() const { return vertexDim * sizeof(GLfloat); }
-		inline GLsizeiptr Size() const { return elementCount * sizeof(GLfloat); }
+		inline GLuint VertexDim() const { return vertexDim; }
+		inline GLuint VertexCount() const { return vertexCount; }
+		inline GLsizei Stride() const { return (GLfloat)vertexDim * sizeof(GLfloat); }
+		inline GLsizeiptr Size() const { return (GLfloat)elementCount * sizeof(GLfloat); }
+		inline GLuint ElementCount() const { return elementCount; }
+		void Scale(const GLfloat& Multiplier);
 	};
 
 	class Cube : public Shape {

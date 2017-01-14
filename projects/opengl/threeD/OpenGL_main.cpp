@@ -16,6 +16,7 @@ void RenderLoop(GLFWwindow* window);
 void KeyPressEvent(GLFWwindow* window, GLint key, GLint scancode, GLint action, GLint mode);
 int main(int argc, char* argv[]) {
 	jlg::Window3d window("window1");
+	window.ScaleCube(5.0f);
 	window.Initialize();
 	window.SetClearColor(0.3f, 0.4f, 0.3f, 1.0f);
 	window.LoadShader("threed.vs", "threed.frag");

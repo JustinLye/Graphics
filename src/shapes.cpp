@@ -1,6 +1,6 @@
 #include"..\include\shapes.h"
 
-jlg::Shape::Shape(GLfloat VertexDim, GLfloat VertexCount) :
+jlg::Shape::Shape(GLuint VertexDim, GLuint VertexCount) :
 	vertexDim(VertexDim),
 	vertexCount(VertexCount),
 	elementCount(VertexDim * VertexCount),
@@ -11,7 +11,15 @@ jlg::Shape::~Shape() {
 		delete[] vertexData;
 }
 
-jlg::Cube::Cube() : Shape(5.0f, 36.0f) {
+void jlg::Shape::Scale(const GLfloat& Multiplier) {
+	if(vertexData == nullptr)
+		return;
+	for(GLuint r = 0; r < vertexCount; r++)
+		for(GLuint c = 0; c < 3; c++)
+			*(vertexData + (r * vertexDim) + c) *= Multiplier;
+}
+
+jlg::Cube::Cube() : Shape(5, 36) {
 	AllocateVertexData();
 }
 

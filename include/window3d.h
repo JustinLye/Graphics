@@ -112,6 +112,7 @@ namespace jlg {
 		void LoadShader(const char* vertexShaderPath, const char* fragmentShaderPath);
 		void LoadVertexArrayObject(const char* imagePath);
 		void Initialize();
+		inline void ScaleCube(const GLfloat& Multiplier) { vao.cube.Scale(Multiplier); }
 
 	};
 };
