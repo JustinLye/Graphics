@@ -15,7 +15,7 @@ const GLchar* TITLE = "OpenGL Window";
 void RenderLoop(GLFWwindow* window);
 void KeyPressEvent(GLFWwindow* window, GLint key, GLint scancode, GLint action, GLint mode);
 int main(int argc, char* argv[]) {
-    jlg::WinGroup wgrp;
+    jlg::WinGroup<jlg::Window> wgrp;
 	wgrp.PushBack("OpenGL window");
 	while(wgrp.IsActive())
 		wgrp.Render();

@@ -1,4 +1,6 @@
-#pragma once
+
+#if !defined(__JLG_WINDOW_HEADER__)
+#define __JLG_WINDOW_HEADER__
 #include<iostream>
 #define GLEW_STATIC
 #include<GL/glew.h>
@@ -71,7 +73,7 @@ namespace jlg {
 		void Destroy();
 		void SetViewPort(GLuint x = 0, GLuint y = 0);
 		void MakeCurrent();
-		void Render();
+		virtual void Render();
 		void SetCallback(GLFWkeyfun cbfun);
 		void SetCallback(GLFWwindowclosefun cbfun);
 		//member variable access
@@ -90,7 +92,7 @@ namespace jlg {
 	
 	};
 
-
+	template<class WindowType = jlg::Window>
 	class WinGroup {
 	private:
 		int size;
@@ -98,7 +100,7 @@ namespace jlg {
 		void AtCapMsg() const;
 		GLFWwindow* currContext; //used to restore context.
 	protected:
-		Window* windows;
+		WindowType* windows;
 		void InsertNewWindow(int Width = -1, int Height = -1, const char* Title = nullptr);
 		void RenderAll();
 	public:
@@ -130,7 +132,12 @@ namespace jlg {
 		}
 
 		//operators
-		Window& operator[](int ID);
+		WindowType& operator[](int ID);
 	};
 
 };
+#endif
+
+#if !defined(__JLG_WINDOW_CPP__)
+#include"..\src\window.cpp"
+#endif

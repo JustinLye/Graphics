@@ -1,5 +1,12 @@
-#include"window.h"
+#if !defined(__JLG_WINDOW_CPP__)
+#define __JLG_WINDOW_CPP__
 
+#if !defined(__JLG_WINDOW_HEADER__)
+#include"window.h"
+#endif
+
+
+#ifdef __JLG_WINDOW_BUILD__
 namespace jlg {
 	const char* DefaultWinTitles[] = {
 		"Window 1",
@@ -14,6 +21,8 @@ namespace jlg {
 		"Window 10"
 	};
 };
+
+
 //window class
 bool jlg::Window::isInitialized = false;
 
@@ -115,71 +124,80 @@ void jlg::Window::Render() {
 	glfwSwapBuffers(winPtr);
 }
 
+#endif
 //WinGroup class
-const int jlg::WinGroup::MAX_WINDOWS = 10;
-const char* jlg::WinGroup::MAX_WINDOWS_REACHED = "ERROR::WINGROUP::PUSHBACK::Maximum windows reached";
+template<class WindowType>
+const int jlg::WinGroup<WindowType>::MAX_WINDOWS = 10;
+template<class WindowType>
+const char* jlg::WinGroup<WindowType>::MAX_WINDOWS_REACHED = "ERROR::WINGROUP::PUSHBACK::Maximum windows reached";
 
-void jlg::WinGroup::AtCapMsg() const {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::AtCapMsg() const {
 	std::cerr << MAX_WINDOWS_REACHED << std::endl;
 }
-
-void jlg::WinGroup::InsertNewWindow(int Width, int Height, const char* Title) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::InsertNewWindow(int Width, int Height, const char* Title) {
 	if(Width <= 0)
 		Width = (int)WIN_DEFAULT_WIDTH;
 	if(Height <= 0)
 		Height = (int)WIN_DEFAULT_HEIGHT;
 	if (Title == nullptr)
-		Title = DefaultWinTitles[size];
-	windows[size] = Window(Width, Height, Title);
+		Title = "Window";
+		//Title = DefaultWinTitles[size];
+	windows[size] = WindowType(Width, Height, Title);
 	windows[size].Create();
 	size++;
 }
-
-jlg::WinGroup::WinGroup() : size(0), currContext(nullptr), windows(nullptr) {
+template<class WindowType = jlg::Window>
+jlg::WinGroup<WindowType>::WinGroup() : size(0), currContext(nullptr), windows(nullptr) {
 	windows = new Window[MAX_WINDOWS];
 }
-
-jlg::WinGroup::~WinGroup() {
+template<class WindowType>
+jlg::WinGroup<WindowType>::~WinGroup() {
 	delete[] windows;
 }
-
-void jlg::WinGroup::PushBack() {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::PushBack() {
 	if (AtCapacity()) {
 		AtCapMsg();
 		return;
 	}
 	InsertNewWindow();
 }
-void jlg::WinGroup::PushBack(int Width) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::PushBack(int Width) {
 	if (AtCapacity()) {
 		AtCapMsg();
 		return;
 	}
 	InsertNewWindow(Width);
 }
-void jlg::WinGroup::PushBack(int Width, int Height) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::PushBack(int Width, int Height) {
 	if (AtCapacity()) {
 		AtCapMsg();
 		return;
 	}
 	InsertNewWindow(Width, Height);
 }
-void jlg::WinGroup::PushBack(int Width, int Height, const char* Title) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::PushBack(int Width, int Height, const char* Title) {
 	if (AtCapacity()) {
 		AtCapMsg();
 		return;
 	}
 	InsertNewWindow(Width, Height, Title);
 }
-void jlg::WinGroup::PushBack(const char* Title) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::PushBack(const char* Title) {
 	if (AtCapacity()) {
 		AtCapMsg();
 		return;
 	}
 	InsertNewWindow(-1,-1,Title);
 }
-
-void jlg::WinGroup::RenderAll() {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::RenderAll() {
 	GLFWwindow* currContext = glfwGetCurrentContext();
 	for (int i = 0; i < size; i++) {
 		if (windows[i].IsActive()) {
@@ -196,8 +214,8 @@ void jlg::WinGroup::RenderAll() {
 	}
 	glfwMakeContextCurrent(currContext);
 }
-
-void jlg::WinGroup::Render(const int& ID) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::Render(const int& ID) {
 	if (ID == -1) {
 		RenderAll();
 	} else if (ID < 0 || ID >= size) {
@@ -210,18 +228,18 @@ void jlg::WinGroup::Render(const int& ID) {
 		std::cerr << "ERROR::WINGROUP::RENDER::Window is not active" << std::endl;
 	}
 }
-
-void jlg::WinGroup::SetCallback(GLFWkeyfun cbfun) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::SetCallback(GLFWkeyfun cbfun) {
 	for(int i = 0; i < size; i++)
 		windows[i].SetCallback(cbfun);
 }
-
-void jlg::WinGroup::SetCallback(GLFWwindowclosefun cbfun) {
+template<class WindowType>
+void jlg::WinGroup<WindowType>::SetCallback(GLFWwindowclosefun cbfun) {
 	for(int i = 0; i < size; i++)
 		windows[i].SetCallback(cbfun);
 }
-
-jlg::Window& jlg::WinGroup::operator[](int ID) {
+template<class WindowType>
+WindowType& jlg::WinGroup<WindowType>::operator[](int ID) {
 
 	if (ID >= 0 && ID < size) {
 		return windows[ID];
@@ -230,3 +248,4 @@ jlg::Window& jlg::WinGroup::operator[](int ID) {
 		throw std::exception("Invalid accessor");
 	}
 }
+#endif
