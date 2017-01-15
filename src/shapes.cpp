@@ -67,7 +67,5 @@ void jlg::Cube::BindBuffer(const GLuint& VertexArrayObject, const GLuint& Vertex
 }
 
 void jlg::Cube::Draw() {
-	glBindVertexArray(*vertexArrayPtr);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
 }

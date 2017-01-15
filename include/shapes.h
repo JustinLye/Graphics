@@ -46,8 +46,8 @@ namespace jlg {
 		const GLuint* vertexArrayPtr;
 	public:
 		Cube();
-		void BindBuffer(const GLuint& VertexArrayObject, const GLuint& VertexBufferObject, const GLuint& ElementBufferObject);
-		void Draw();
+		virtual void BindBuffer(const GLuint& VertexArrayObject, const GLuint& VertexBufferObject, const GLuint& ElementBufferObject);
+		virtual void Draw();
 	};
 
 

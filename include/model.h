@@ -5,12 +5,17 @@
 #include"shapes.h"
 
 namespace jlg {
-	class Model {
+	class Model : public Cube {
 	public:
 		Texture texture;
-		Cube cube;
 		Model();
-
+		virtual void BindModel(
+			const GLuint& VertexArrayObject,
+			const GLuint& VertexBufferObject,
+			const GLuint& ElementBufferObject,
+			const GLuint& TextureID,
+			const GLchar* ImageFilePath);
+		virtual void Draw();
 	};
 };
 
