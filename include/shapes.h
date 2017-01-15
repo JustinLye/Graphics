@@ -27,26 +27,13 @@ namespace jlg {
 		virtual void Scale(const GLfloat& Multiplier);
 	};
 
-	enum CubePoint {
-		BOTTOM_BACK_LEFT,
-		BOTTOM_FRONT_LEFT,
-		BOTTOM_BACK_RIGHT,
-		BOTTOM_FRONT_RIGHT,
-		TOP_BACK_LEFT,
-		TOP_FRONT_LEFT,
-		TOP_BACK_RIGHT,
-		TOP_FRONT_RIGHT
-	};
-
 	class Cube : public Shape {
 	protected:
 		void AllocateVertexData();
 		GLfloat* points;
-		GLuint* indices;
-		const GLuint* vertexArrayPtr;
 	public:
 		Cube();
-		virtual void BindBuffer(const GLuint& VertexArrayObject, const GLuint& VertexBufferObject, const GLuint& ElementBufferObject);
+		virtual void BindBuffer(const GLuint& VertexArrayObject, const GLuint& VertexBufferObject);
 		virtual void Draw();
 	};
 

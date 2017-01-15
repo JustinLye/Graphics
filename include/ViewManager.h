@@ -52,7 +52,6 @@ namespace jlg {
 	struct ViewBufferIDs {
 		GLuint VAO;
 		GLuint VBO;
-		GLuint EBO;
 		GLuint TexID;
 	};
 	struct ViewData {

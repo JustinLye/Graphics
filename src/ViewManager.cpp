@@ -9,12 +9,11 @@ jlg::ViewManager::ViewManager(const ViewNames& Names) : camera(glm::vec3(0.0f, 0
 void jlg::ViewManager::GenerateBuffers() {
 	glGenVertexArrays(1, &data.IDs.VAO);
 	glGenBuffers(1, &data.IDs.VBO);
-	glGenBuffers(1, &data.IDs.EBO);
 	glGenTextures(1, &data.IDs.TexID);
 }
 
 void jlg::ViewManager::BindData() {
-	cube.BindBuffer(data.IDs.VAO, data.IDs.VBO, data.IDs.EBO);
+	cube.BindBuffer(data.IDs.VAO, data.IDs.VBO);
 	texture.BufferTexture(data.IDs.TexID);
 }
 
