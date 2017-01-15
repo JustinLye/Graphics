@@ -26,7 +26,7 @@ namespace jlg {
 	const GLfloat SPEED = 3.0f;
 	const GLfloat SENSITIVTY = 0.25f;
 	const GLfloat ZOOM = 45.0f;
-
+	const GLfloat BOOST = 1.0f;
 
 	// An abstract camera class that processes input and calculates the corresponding Eular Angles, Vectors and Matrices for use in OpenGL
 	class Camera {
@@ -44,9 +44,9 @@ namespace jlg {
 		GLfloat MovementSpeed;
 		GLfloat MouseSensitivity;
 		GLfloat Zoom;
-
+		GLfloat Boost;
 		// Constructor with vectors
-		Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM) {
+		Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM), Boost(BOOST) {
 			this->Position = position;
 			this->WorldUp = up;
 			this->Yaw = yaw;
@@ -54,7 +54,7 @@ namespace jlg {
 			this->updateCameraVectors();
 		}
 		// Constructor with scalar values
-		Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM) {
+		Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM), Boost(BOOST) {
 			this->Position = glm::vec3(posX, posY, posZ);
 			this->WorldUp = glm::vec3(upX, upY, upZ);
 			this->Yaw = yaw;
@@ -69,7 +69,7 @@ namespace jlg {
 
 		// Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
 		void ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime) {
-			GLfloat velocity = this->MovementSpeed * deltaTime;
+			GLfloat velocity = (this->MovementSpeed * this->Boost) * deltaTime;
 			if (direction == FORWARD)
 				this->Position += this->Front * velocity;
 			if (direction == BACKWARD)

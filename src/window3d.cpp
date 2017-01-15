@@ -16,6 +16,13 @@ void jlg::CallBackWrapper::KeyPressEvent(GLFWwindow* window, int key, int scanco
 		else if(action == GLFW_RELEASE)
 			currentWindow->keys[key] = false;
 	}
+	if (key == GLFW_KEY_LEFT_SHIFT) {
+		if (action == GLFW_PRESS) {
+			currentWindow->camera.Boost = 4.0f;
+		} else if(action == GLFW_RELEASE)
+			currentWindow->camera.Boost = 1.0f;
+	}
+
 }
 
 void jlg::CallBackWrapper::MouseMoveEvent(GLFWwindow* window, double xpos, double ypos) {
@@ -47,6 +54,7 @@ void jlg::CallBackWrapper::DoMovement() {
 		currentWindow->camera.ProcessKeyboard(LEFT, currentWindow->deltaTime);
 	if (currentWindow->keys[GLFW_KEY_D])
 		currentWindow->camera.ProcessKeyboard(RIGHT, currentWindow->deltaTime);
+	
 }
 
 void jlg::CallBackWrapper::HandleCallBackEvents(Window3d* window, bool ManageContext) {

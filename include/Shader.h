@@ -5,6 +5,9 @@
 #include<sstream>
 #include<iostream>
 #include<GL/glew.h>
+#include<glm/glm.hpp>
+#include<glm/gtc/matrix_transform.hpp>
+#include<glm/gtc/type_ptr.hpp>
 #include"freader.h"
 namespace jlg {
 	class Shader {
@@ -21,6 +24,7 @@ namespace jlg {
 			}
 		}
 		void InitializeShaderProgram(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
+		void LoadUniformMatrix4fv(const GLchar* UniformName, glm::mat4& MatrixData);
 	protected:
 		void LoadVertexShader(const GLchar* vertexShaderSourceCode);
 		void LoadFragmentShader(const GLchar* fragmentShaderSourceCode);

@@ -26,6 +26,11 @@ void jlg::Shader::InitializeShaderProgram(const GLchar* vertexShaderPath, const 
 	initialized = true;
 }
 
+void jlg::Shader::LoadUniformMatrix4fv(const GLchar* UniformName, glm::mat4& MatrixData) {
+	GLuint loc = glGetUniformLocation(this->Program, UniformName);
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(MatrixData));
+}
+
 void jlg::Shader::LoadVertexShader(const GLchar* vertexShaderSourceCode) {
 	GLint success;
 	GLchar infoLog[512];
