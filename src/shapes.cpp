@@ -1,118 +1,4 @@
 #include"..\include\shapes.h"
-//No allocation. Initialize count and dims to zero
-jlg::VertexData::VertexData() :
-	vertices(nullptr),
-	count(0),
-	dims(0),
-	length(0),
-	size(0) {}
-
-//If Vertices is not null, memory will be allocated per count and dim. Copy info pointed to by Vertices
-jlg::VertexData::VertexData(
-	const GLuint& Count,
-	const GLuint& Dimensions,
-	const GLfloat* Vertices) :
-    vertices(nullptr),
-	count(Count),
-	dims(Dimensions),
-	length(Count * Dimensions),
-	size((Count * Dimensions) * sizeof(GLfloat)) {
-	vertices = new GLfloat[length];
-	if (Vertices != nullptr) {
-		for(GLuint i = 0; i < length; i++)
-			vertices[i] = Vertices[i];
-	}
-}
-
-//Copy constructor allocates vertices and copies info
-jlg::VertexData::VertexData(const VertexData& CopyShape) :
-	vertices(nullptr),
-	count(CopyShape.count),
-	dims(CopyShape.dims),
-	length(CopyShape.count * CopyShape.dims),
-	size((CopyShape.count * CopyShape.dims) * sizeof(GLfloat)) {
-	if (length > 0) {
-		vertices = new GLfloat[length];
-		if (CopyShape.vertices != nullptr)
-			for(GLuint i = 0; i < length; i++)
-				vertices[i] = CopyShape.vertices[i];
-	}
-}
-
-//Allocates vertices, moves all members, then sets count and dims to zero and deletes vertices of MoveShape and sets vertices pointer to null
-jlg::VertexData::VertexData(VertexData&& MoveShape) :
-	vertices(nullptr),
-	count(std::move(MoveShape.count)),
-	dims(std::move(MoveShape.dims)),
-	length(std::move(MoveShape.length)),
-	size(std::move(MoveShape.size)) {
-	assert(count * dims == length && length * sizeof(GLfloat) == size);
-	if (length > 0) {
-		vertices = new GLfloat[length];
-		if (MoveShape.vertices != nullptr) {
-			for (GLuint i = 0; i < length; i++) {
-				vertices[i] = std::move(MoveShape.vertices[i]);
-			}
-			delete[] MoveShape.vertices;
-		}
-	}
-	MoveShape.vertices = nullptr;
-	MoveShape.count = 0;
-	MoveShape.dims = 0;
-	MoveShape.length = 0;
-	MoveShape.size = 0;
-}
-
-//Ensures resources are released
-jlg::VertexData::~VertexData() {
-	if(vertices != nullptr)
-		delete[] vertices;
-}
-
-//initializes all members to zero.
-jlg::Attrib::Attrib() :
-	index(0),
-	count(0),
-	stride(0),
-	offset(0) {}
-
-//initialize members per arguments
-jlg::Attrib::Attrib(
-	const GLuint& Index,
-	const GLuint& Count,
-	const GLuint& Stride,
-	const GLuint& Offset) :
-	index(Index),
-	count(Count),
-	stride(Stride),
-	offset(Offset) {}
-
-//Trivial copy constructor
-jlg::Attrib::Attrib(const Attrib& CopyAttrib) :
-	index(CopyAttrib.index),
-	count(CopyAttrib.count),
-	stride(CopyAttrib.stride),
-	offset(CopyAttrib.offset) {}
-
-//Moves members and resets MoveAttrib members to zero.
-jlg::Attrib::Attrib(Attrib&& MoveAttrib) :
-	index(std::move(MoveAttrib.index)),
-	count(std::move(MoveAttrib.count)),
-	stride(std::move(MoveAttrib.stride)),
-	offset(std::move(MoveAttrib.offset)) {
-    MoveAttrib.index = 0;
-	MoveAttrib.count = 0;
-	MoveAttrib.stride = 0;
-	MoveAttrib.offset = 0;
-}
-
-//trivial assignment operator
-jlg::Attrib& jlg::Attrib::operator=(const Attrib& CopyAttrib) {
-	index = CopyAttrib.index;
-	count = CopyAttrib.count;
-	stride = CopyAttrib.stride;
-	offset = CopyAttrib.offset;
-}
 
 const GLuint jlg::ShapeAttribs::SHAPE_ATTRIBS_MAX_CAPACITY = 64;
 const GLuint jlg::ShapeAttribs::SHAPE_ATTRIBS_INITIAL_CAPACITY = 4;
@@ -173,7 +59,7 @@ bool jlg::ShapeAttribs::Resize(const GLuint& NewCapacity) {
 
 //Returns true if attribs array should be downsized
 bool jlg::ShapeAttribs::DownSize() const {
-	if(attribs == nullptr || length == 0 || capacity == 0)
+	if(attribs == nullptr || capacity == 0)
 		return false;
 	if(((GLfloat)length/(GLfloat)capacity <= SHAPE_ATTRIBS_MIN_SPARSITY_RATIO) &&
 		((capacity - length) >= SHAPE_ATTRIBS_MAX_FREE_SPACE) &&
@@ -306,82 +192,69 @@ jlg::ShapeAttribs::ShapeAttribs(ShapeAttribs&& MoveAttribs) :
 	if (MoveAttribs.attribs != nullptr) {
 		for (GLuint i = 0; i < length; i++)
 			attribs[i] = std::move(MoveAttribs.attribs[i]);
-		delete[] MoveAttribs.attribs;
+		Attrib* delPtr = MoveAttribs.attribs;
+		MoveAttribs.attribs = nullptr;
+		delete[] delPtr;
 	}
 	MoveAttribs.length = 0;
 	MoveAttribs.capacity = 0;
 	MoveAttribs.capacityOnReserve = 0;
-	MoveAttribs.attribs = nullptr;
 }
 
+//Ensures resources are released.
 jlg::ShapeAttribs::~ShapeAttribs() {
-	if(attribs != nullptr)
-		delete[] attribs;
+
+	if (attribs != nullptr) {
+		Attrib* delPtr = attribs;
+		attribs = nullptr;
+		delete[] delPtr;
+	}
 }
 
-void jlg::Cube::AllocateVertexData() {
-
-	points = new GLfloat[elementCount] {
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-	};
+//Releases any memory allocated to data.vertexData and resets members to zero or nullptr
+void jlg::Shape::ClearVertexData() {
+	if (data.vertexData.vertices != nullptr) {
+		GLfloat* delPtr = data.vertexData.vertices;
+		data.vertexData.vertices = nullptr;
+		delete[] delPtr;
+	}
+	data.vertexData.count = 0;
+	data.vertexData.dims = 0;
+	data.vertexData.size = 0;
+	data.vertexData.length = 0;
 }
 
-jlg::Cube::Cube() : Shape(5, 36), points(nullptr) {
-	AllocateVertexData();
+//Clears vertexData struct (call to ClearVertexData) then sets vertexData struct members per arguments.
+void jlg::Shape::ResetVertexData(const GLfloat* VertexArray, const GLuint& Count, const GLuint& Dimensions) {
+	ClearVertexData();
+	data.vertexData.count = Count;
+	data.vertexData.dims = Dimensions;
+	data.vertexData.length = Count * Dimensions;
+	data.vertexData.size = data.vertexData.length * sizeof(GLfloat);
+	data.vertexData.vertices = new GLfloat[data.vertexData.length];
+	for(GLuint i = 0; i < data.vertexData.length; i++)
+		data.vertexData.vertices[i] = VertexArray[i];
+
 }
 
-void jlg::Cube::BindBuffer(const GLuint& VertexArrayObject, const GLuint& VertexBufferObject) {
-	glBindVertexArray(VertexArrayObject);
-	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
-	glBufferData(GL_ARRAY_BUFFER, elementCount * sizeof(GLfloat), points, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-	glEnableVertexAttribArray(1);
-	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+jlg::Shape::Shape() {}
+jlg::Shape::Shape(const Shape& CopyShape) : data(CopyShape.data) {}
+jlg::Shape::Shape(Shape&& MoveShape) : data(std::move(MoveShape.data)) {}
+jlg::Shape::Shape(const ShapeData& InitShapeData) : data(InitShapeData) {}
+jlg::Shape::Shape(const VertexData& InitVertexData) : data(InitVertexData)  {}
+jlg::Shape::Shape(const ShapeAttribs& InitShapeAttribs) : data(InitShapeAttribs) {}
+jlg::Shape::Shape(const VertexData& InitVertexData, const ShapeAttribs& InitShapeAttribs) :
+	data(InitVertexData, InitShapeAttribs) {}
+
+void jlg::Shape::BufferVertexAttributes() {
+	for (GLuint i = 0; i < data.attributes.Length(); i++) {
+		glVertexAttribPointer(
+			data.attributes[i].index,
+			data.attributes[i].count,
+			GL_FLOAT,
+			GL_FALSE,
+			data.attributes[i].stride * sizeof(GLfloat), (GLvoid*)(data.attributes[i].offset * sizeof(GLfloat)));
+		glEnableVertexAttribArray(data.attributes[i].index);
+	}
 }
 
-void jlg::Cube::Draw() {
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-}
