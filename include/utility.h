@@ -8,6 +8,94 @@
 
 namespace jlg {
 
+	enum JLGenum {
+		WINDOW_WIDTH_DEFAULT = 800,
+		WINDOW_HEIGHT_DEFAULT = 600,
+		WINDOW_CALLBACK_CURSOR_POS = 0,
+		WINDOW_CALLBACK_SCROLL = 1
+	};
+
+	struct Color {
+		GLfloat r;
+		GLfloat g;
+		GLfloat b;
+		GLfloat a;
+		Color() : r(0.0f), g(0.0f), b(0.0f), a(1.0f) {}
+		Color(
+			const GLfloat& Red,
+			const GLfloat& Green,
+			const GLfloat& Blue,
+			const GLfloat& Alpha) :
+			r(Red),
+			g(Green),
+			b(Blue),
+			a(Alpha) {}
+		Color(const Color& CopyColor) :
+			r(CopyColor.r),
+			g(CopyColor.g),
+			b(CopyColor.b),
+			a(CopyColor.a) {}
+		Color(Color&& MoveColor) :
+			r(std::move(MoveColor.r)),
+			g(std::move(MoveColor.g)),
+			b(std::move(MoveColor.b)),
+			a(std::move(MoveColor.a)) {}
+		Color& operator=(const Color& color) {
+			this->r = color.r;
+			this->g = color.g;
+			this->b = color.b;
+			this->a = color.a;
+			return *this;
+		}
+	};
+
+	class WindowSpecs {
+	protected:
+		GLuint width;
+		GLuint height;
+		const GLchar* title;
+		Color color;
+		int screenWidth;
+		int screenHeight;
+		bool firstMouse;
+		GLfloat lastX;
+		GLfloat lastY;
+		bool keys[1024];
+		WindowSpecs() :
+			width(WINDOW_WIDTH_DEFAULT),
+			height(WINDOW_HEIGHT_DEFAULT),
+			title("Window"),
+			screenWidth(WINDOW_WIDTH_DEFAULT),
+			screenHeight(WINDOW_HEIGHT_DEFAULT),
+			firstMouse(true),
+			lastX(WINDOW_WIDTH_DEFAULT/2.0f),
+			lastY(WINDOW_HEIGHT_DEFAULT/2.0f) {
+		    for(int i = 0; i < 1024; i++)
+				keys[i] = false;
+		}
+		WindowSpecs(const WindowSpecs& CopySpecs) :
+			width(CopySpecs.width),
+			height(CopySpecs.height),
+			title(CopySpecs.title),
+			color(CopySpecs.color),
+			screenWidth(CopySpecs.screenWidth),
+			screenHeight(CopySpecs.screenHeight),
+			firstMouse(true) {
+			for (int i = 0; i < 1024; i++)
+				keys[i] = false;
+		}
+		WindowSpecs(WindowSpecs&& MoveSpecs) :
+			width(std::move(MoveSpecs.width)),
+			height(std::move(MoveSpecs.height)),
+			title(std::move(MoveSpecs.title)),
+			color(std::move(MoveSpecs.color)),
+			screenWidth(std::move(MoveSpecs.screenWidth)),
+			screenHeight(std::move(MoveSpecs.screenHeight)),
+			firstMouse(true) {
+			for (int i = 0; i < 1024; i++)
+				keys[i] = false;
+		}
+	};
 
 	//Structure to store basic vertex information.
 	//Intended to be used as a member of the Shape class.

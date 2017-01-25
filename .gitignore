@@ -5,3 +5,4 @@ keepsake/*
 *.VC.*
 *vcxproj*
 *Debug*
+projects\*

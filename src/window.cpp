@@ -1,30 +1,25 @@
-#if !defined(__JLG_WINDOW_CPP__)
-#define __JLG_WINDOW_CPP__
-
 #if !defined(__JLG_WINDOW_HEADER__)
 #include"window.h"
 #endif
 
 
-#ifdef __JLG_WINDOW_BUILD__
-namespace jlg {
-	const char* DefaultWinTitles[] = {
-		"Window 1",
-		"Window 2",
-		"Window 3",
-		"Window 4",
-		"Window 5",
-		"Window 6",
-		"Window 7",
-		"Window 8",
-		"Window 9",
-		"Window 10"
-	};
-};
+void jlg::CallbackWrapper::KeyPressEvent(GLFWwindow* window, int key, int scancode, int action, int mode) {
+	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(windowPtr->window, GLFW_TRUE);
+	if (key >= 0 && key < 1024) {
+		if(action == GLFW_PRESS)
+			windowPtr->SetKey(key, true);
+		else if(action == GLFW_RELEASE)
+			windowPtr->SetKey(key, false);
+	}
+}
 
+void jlg::CallbackWrapper::MouseMoveEvent(GLFWwindow* window, double xpos, double ypos) {
+	
+}
 
 //window class
-bool jlg::Window::isInitialized = false;
+bool jlg::Window::initialized = false;
 
 void jlg::Window::Initialize() {
 	//initalize GLFW

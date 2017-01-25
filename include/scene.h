@@ -10,6 +10,7 @@
 #include"Shader.h"
 #include"texture.h"
 #include"camera.h"
+#include"window.h"
 
 
 namespace jlg {
@@ -28,6 +29,7 @@ namespace jlg {
 
 	class Scene {
 	public:
+		Window window;
 		SceneSpecs specs;
 		Shader shader;
 		Camera camera;
@@ -35,6 +37,16 @@ namespace jlg {
 		Model model;
 		glm::mat4 view;
 		glm::mat4 projection;
+
+		Scene(
+			const GLchar* VertexShaderPath,
+			const GLchar* FragmentShaderPath,
+			const GLchar* ImageFilePath,
+			const GLchar* ModelUniformName,
+			const GLchar* ViewUniformName,
+			const GLchar* ProjUniformName,
+			const GLchar* TextureUniformName,
+			const Model& Model);
 
 	};
 };
