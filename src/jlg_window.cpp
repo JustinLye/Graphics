@@ -29,6 +29,18 @@ void jlg::Window::SetViewport() {
 	glViewport(0,0, _screen_width, _screen_height);
 }
 
+void jlg::Window::SetColor(const GLfloat& Red, const GLfloat& Green, const GLfloat& Blue, const GLfloat& Alpha) {
+	_color.r = Red;
+	_color.g = Green;
+	_color.b = Blue;
+	_color.a = Alpha;
+}
+
+void jlg::Window::Render() const {
+	glClearColor(_color.r, _color.g, _color.b, _color.a);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void jlg::Window::_create_window(bool make_current) {
 	if (!_is_initialized) {
 		_init();

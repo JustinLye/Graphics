@@ -58,7 +58,9 @@ void jlg::shape::buffer(const GLuint& generated_vao, const GLuint& generated_vbo
 			(GLvoid*)(attribs[i].offset * sizeof(GLfloat)));
 		glEnableVertexAttribArray(attribs[i].index);
 	}
-	glBindVertexArray(generated_vao);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 }
 
 void jlg::shape::draw() const {

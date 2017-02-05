@@ -4,8 +4,8 @@
 #include<GL/glew.h>
 #include<GLFW/glfw3.h>
 
-#if !defined(__JL_SHAPE_HEADER__)
-#define __JL_SHAPE_HEADER__
+#if !defined(__JLG_SHAPE_HEADER__)
+#define __JLG_SHAPE_HEADER__
 
 namespace jlg {
 
