@@ -1,4 +1,4 @@
-#include"jlg_window.h"
+#include"window.h"
 
 bool jlg::Window::_is_initialized = false;
 bool jlg::Window::_is_first_window = true;
@@ -10,6 +10,7 @@ jlg::Window::Window(const GLuint& Width, const GLuint& Height, const GLchar* Tit
 	_screen_width(0),
 	_screen_height(0),
 	_is_created(false) {
+	std::cout << "calling create window\nchange test" << std::endl;
 	this->_create_window(make_current);
 }
 
@@ -39,9 +40,11 @@ void jlg::Window::SetColor(const GLfloat& Red, const GLfloat& Green, const GLflo
 void jlg::Window::Render() const {
 	glClearColor(_color.r, _color.g, _color.b, _color.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 }
 
 void jlg::Window::_create_window(bool make_current) {
+	std::cout << "window is being created" << std::endl;
 	if (!_is_initialized) {
 		_init();
 		_is_initialized = true;
@@ -55,6 +58,7 @@ void jlg::Window::_create_window(bool make_current) {
 	if (make_current) {
 		glfwMakeContextCurrent(_window);
 	}
+	std::cout << std::boolalpha << _is_first_window << std::endl;
 	if (_is_first_window) {
 		GLFWwindow* curr_win = NULL;
 		if (!make_current) {
@@ -63,6 +67,7 @@ void jlg::Window::_create_window(bool make_current) {
 		}
 		glewExperimental = GL_TRUE;
 		glewInit();
+		glEnable(GL_DEPTH_TEST);
 		_is_first_window = false;
 		if (!make_current) {
 			glfwMakeContextCurrent(curr_win);
@@ -77,7 +82,6 @@ void jlg::Window::_init() const {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	glEnable(GL_DEPTH_TEST);
 }
 
 

@@ -1,7 +1,7 @@
 
 #if !defined(__JLG_VIEWER_HEADER__)
 #define __JLG_VIEWER_HEADER__
-#include "jlg_window.h"
+#include "window.h"
 #include "Shader.h"
 #include "shape_mgr.h"
 

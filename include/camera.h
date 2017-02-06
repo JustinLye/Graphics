@@ -6,7 +6,9 @@
 #include <vector>
 
 // GL Includes
+#define GLEW_STATIC
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -29,7 +31,7 @@ namespace jlg {
 	const GLfloat BOOST = 1.0f;
 
 	// An abstract camera class that processes input and calculates the corresponding Eular Angles, Vectors and Matrices for use in OpenGL
-	class Camera {
+	class camera {
 	public:
 		// Camera Attributes
 		glm::vec3 Position;
@@ -46,7 +48,7 @@ namespace jlg {
 		GLfloat Zoom;
 		GLfloat Boost;
 		// Constructor with vectors
-		Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM), Boost(BOOST) {
+		camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), GLfloat yaw = YAW, GLfloat pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM), Boost(BOOST) {
 			this->Position = position;
 			this->WorldUp = up;
 			this->Yaw = yaw;
@@ -54,7 +56,7 @@ namespace jlg {
 			this->updateCameraVectors();
 		}
 		// Constructor with scalar values
-		Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM), Boost(BOOST) {
+		camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM), Boost(BOOST) {
 			this->Position = glm::vec3(posX, posY, posZ);
 			this->WorldUp = glm::vec3(upX, upY, upZ);
 			this->Yaw = yaw;
