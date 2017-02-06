@@ -1,9 +1,4 @@
 images/*
 keepsake/*
-*.sln
-*.VC.db
-*.VC.*
-*vcxproj*
 *Debug*
-projects\*
 projects/WindowsFormsApplication1/*
