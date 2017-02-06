@@ -2,8 +2,9 @@
 #if !defined(__JLG_VIEWER_HEADER__)
 #define __JLG_VIEWER_HEADER__
 #include "window.h"
-#include "Shader.h"
 #include "shape_mgr.h"
+#include "shading_mgr.h"
+
 
 namespace jlg {
 	class viewer {
@@ -14,38 +15,25 @@ namespace jlg {
 			const GLchar* Title,
 			const GLchar* Vertex_Shader_Path,
 			const GLchar* Fragment_Shader_Path);
-		virtual inline void set_window_background_color(
-			const GLfloat& Red,
-			const GLfloat& Green,
-			const GLfloat& Blue,
-			const GLfloat& Alpha) {
-			_window.SetColor(Red, Green, Blue, Alpha);
+		jlg::Window window;
+		jlg::shape_mgr shapes;
+		jlg::basic_shading_mgr shader;
+		virtual inline void update() {
+			_current_frame = glfwGetTime();
+			_delta_time = _current_frame - _last_frame;
+			jlg::camera_mgr::do_movement(_delta_time);
+			window.Render();
+			shader.apply();
+			shapes.draw();
+			glfwSwapBuffers(window.Handle());
+			_last_frame = _current_frame;
 		}
-		virtual inline void gen_shape(GLuint& shape_id, GLfloat* data, const GLuint& Dimensions, const GLuint& Count) {
-			_shape_manager.gen_shape(shape_id, data, Dimensions, Count);
-		}
-		virtual inline void add_shape_attrib(const GLuint& shape_id, const GLuint& Count) {
-			_shape_manager.add_shape_attrib(shape_id, Count);
-		}
-		virtual inline void buffer() {
-			_shape_manager.buffer();
-		}
-		virtual inline void update() const {
-			_window.Render();
-			_shader.use_program();
-			glBindVertexArray(_vao);
-			_shape_manager.draw();
-			glBindVertexArray(0);
-			glfwSwapBuffers(_window.Handle());
-		}
-		virtual inline bool should_close() { return glfwWindowShouldClose(_window.Handle()); }
 	protected:
-		jlg::Window _window;
-		jlg::shader _shader;
-		jlg::shape_mgr _shape_manager;
+		jlg::camera _camera;
 	private:
-		GLuint _vao;
-		GLuint _vbo;
+		GLfloat _current_frame;
+		GLfloat _last_frame;
+		GLfloat _delta_time;
 	};
 };
 

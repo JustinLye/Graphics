@@ -2,19 +2,13 @@
 #define GLEW_STATIC
 #include<GL/glew.h>
 #include<GLFW/glfw3.h>
-#include"window.h"
-#include"shape_mgr.h"
-#include"shading_mgr.h"
+#include"viewer.h"
 
 int main(int argc, char* argv[]) {
-	jlg::Window win(800, 600, "Window");
-	win.SetViewport();
-	jlg::shape_mgr shapes;
-	jlg::basic_shading_mgr shader("core.vs","core.frag");
-	win.SetColor(0.2f, 0.3f, 0.3f, 1.0f);
-	jlg::camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-	jlg::camera_mgr::bind_camera(&camera, win.Handle());
-	jlg::camera_mgr::bind_camera(&camera, win.Handle());
+	jlg::viewer win_view(800, 600, "Window", "core.vs", "core.frag");
+	win_view.window.SetColor(0.1f, 0.2f, .4f, 1.0f);
+	win_view.window.lock_cursor();
+	win_view.shader.add_texture("container.jpg","texture_01");
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat cube_obj[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -61,25 +55,14 @@ int main(int argc, char* argv[]) {
 	};
 
 	GLuint shape_id;
-	shapes.gen_shape(shape_id, cube_obj, 5, 36);
-	shapes.add_shape_attrib(shape_id, 3);
-	shapes.add_shape_attrib(shape_id, 2);
-	shapes.buffer();
+	win_view.shapes.gen_shape(shape_id, cube_obj, 5, 36);
+	win_view.shapes.add_shape_attrib(shape_id, 3);
+	win_view.shapes.add_shape_attrib(shape_id, 2);
+	win_view.shapes.buffer();
 
-	shader.add_texture("container.jpg","texture_01");
-	
-	GLfloat delta_time = 0.0f;
-	GLfloat last_frame = 0.0f;
-	while (!glfwWindowShouldClose(win.Handle())) {
-		GLfloat current_frame = glfwGetTime();
-		delta_time = current_frame - last_frame;
-		last_frame = current_frame;
+	while (!glfwWindowShouldClose(win_view.window.Handle())) {
 		glfwPollEvents();
-		jlg::camera_mgr::do_movement(delta_time);
-		win.Render();
-		shader.apply();
-		shapes.draw();
-		glfwSwapBuffers(win.Handle());
+		win_view.update();
 	}
 	glfwTerminate();
 	return EXIT_SUCCESS;

@@ -34,6 +34,20 @@ namespace jlg {
 		virtual void SetViewport();
 		virtual void SetColor(const GLfloat& Red, const GLfloat& Green, const GLfloat& Blue, const GLfloat& Alpha);
 		virtual void Render() const;
+		inline virtual void hide_cursor(const GLboolean& hide = true) {
+			if (hide) {
+				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			} else {
+				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			}
+		}
+		inline virtual void lock_cursor(const GLboolean& lock = true) {
+			if (lock) {
+				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			} else {
+				glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			}
+		}
 	protected:
 		GLFWwindow* _window;
 		GLuint _width;
