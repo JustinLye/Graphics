@@ -1,6 +1,5 @@
 #include"../include/shape.h"
 
-#include"../include/shape.h"
 
 jlg::vertex_data::vertex_data(GLfloat* data, const GLuint& Dimensions, const GLuint& Count) :
 	_data(nullptr),

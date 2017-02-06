@@ -1,16 +1,17 @@
 #include<iostream>
+#include<stdexcept>
+#include<thread>
 #define GLEW_STATIC
 #include<GL/glew.h>
 #include<GLFW/glfw3.h>
 #include"viewer.h"
+int main(int argc, char* argv[]) try {
+	jlg::model_viewer window_view(800, 600, "Window","core.vs","core.frag");
+	window_view.window().lock_cursor();
+	window_view.window().SetColor(0.1f, 0.05f, 0.2f, 1.0f);
+	window_view.shader().add_texture("container.jpg","texture_01");
 
-int main(int argc, char* argv[]) {
-	jlg::viewer win_view(800, 600, "Window", "core.vs", "core.frag");
-	win_view.window.SetColor(0.1f, 0.2f, .4f, 1.0f);
-	win_view.window.lock_cursor();
-	win_view.shader.add_texture("container.jpg","texture_01");
-	// Set up vertex data (and buffer(s)) and attribute pointers
-	GLfloat cube_obj[] = {
+	GLfloat cube[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 		0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
 		0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -53,18 +54,31 @@ int main(int argc, char* argv[]) {
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
-
 	GLuint shape_id;
-	win_view.shapes.gen_shape(shape_id, cube_obj, 5, 36);
-	win_view.shapes.add_shape_attrib(shape_id, 3);
-	win_view.shapes.add_shape_attrib(shape_id, 2);
-	win_view.shapes.buffer();
-
-	while (!glfwWindowShouldClose(win_view.window.Handle())) {
+	window_view.models().add_model(shape_id, cube, 5, 36, glm::vec3(0.0f, 0.0f, -3.0f), 20.0f, glm::vec3(1.0f, 0.0f, 0.5f));
+	window_view.models().add_attrib(shape_id, 3);
+	window_view.models().add_attrib(shape_id, 2);
+	window_view.models().buffer();
+	std::cout << shape_id << std::endl;
+	while (!glfwWindowShouldClose(window_view.window().Handle())) {
 		glfwPollEvents();
-		win_view.update();
+		try {
+			window_view.update();
+		} catch (...) {
+			throw std::exception("error occurred in update\n");
+		}
 	}
 	glfwTerminate();
 	return EXIT_SUCCESS;
+} catch (std::runtime_error& e) {
+	std::cerr << e.what() << std::endl;
+	return EXIT_FAILURE;
+} catch (std::exception& e) {
+	std::cerr << e.what() << std::endl;
+	return EXIT_FAILURE;
+} catch (...) {
+	std::cerr << "unknow error" << std::endl;
+	return EXIT_FAILURE;
 }
+
 
