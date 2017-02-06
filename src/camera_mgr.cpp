@@ -1,4 +1,4 @@
-#include"camera_mgr.h"
+#include"jlg/base/camera_mgr.h"
 
 
 bool jlg::camera_mgr::_is_set = false;

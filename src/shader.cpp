@@ -1,4 +1,4 @@
-#include"..\include\shader.h"
+#include"jlg/base/shader.h"
 
 jlg::shader::shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) :
 	initialized(false) {

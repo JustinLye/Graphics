@@ -1,4 +1,4 @@
-#include"texture.h"
+#include"jlg/base/texture.h"
 
 GLuint jlg::texture::_next_active_texture_id = GL_TEXTURE0;
 

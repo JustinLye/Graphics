@@ -1,4 +1,4 @@
-#include"texture_mgr.h"
+#include"jlg/base/texture_mgr.h"
 
 jlg::texture_mgr::texture_mgr() :
 	_next_index(0) {}

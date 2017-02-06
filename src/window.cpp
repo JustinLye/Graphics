@@ -1,4 +1,4 @@
-#include"window.h"
+#include"jlg/base/window.h"
 
 bool jlg::Window::_is_initialized = false;
 bool jlg::Window::_is_first_window = true;

@@ -1,4 +1,4 @@
-#include"../include/shape_mgr.h"
+#include"jlg/base/shape_mgr.h"
 
 jlg::shape_mgr::shape_mgr() {}
 
