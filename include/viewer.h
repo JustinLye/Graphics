@@ -28,12 +28,11 @@ namespace jlg {
 			_shape_manager.add_shape_attrib(shape_id, Count);
 		}
 		virtual inline void buffer() {
-			glGenVertexArrays(1, &_vao);
-			_shape_manager.buffer(_vao);
+			_shape_manager.buffer();
 		}
 		virtual inline void update() const {
 			_window.Render();
-			_shader.UseProgram();
+			_shader.use_program();
 			glBindVertexArray(_vao);
 			_shape_manager.draw();
 			glBindVertexArray(0);
@@ -42,7 +41,7 @@ namespace jlg {
 		virtual inline bool should_close() { return glfwWindowShouldClose(_window.Handle()); }
 	protected:
 		jlg::Window _window;
-		jlg::Shader _shader;
+		jlg::shader _shader;
 		jlg::shape_mgr _shape_manager;
 	private:
 		GLuint _vao;

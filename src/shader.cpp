@@ -1,13 +1,13 @@
-#include"..\include\Shader.h"
+#include"..\include\shader.h"
 
-jlg::Shader::Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) :
+jlg::shader::shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) :
 	initialized(false) {
-	InitializeShaderProgram(vertexShaderPath, fragmentShaderPath);
+	init_shader_program(vertexShaderPath, fragmentShaderPath);
 }
 
-jlg::Shader::Shader() : initialized(false) {}
+jlg::shader::shader() : initialized(false) {}
 
-void jlg::Shader::InitializeShaderProgram(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) {
+void jlg::shader::init_shader_program(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath) {
 	initialized = false;
 	std::string vertexShaderSourceCode;
 	std::string fragmentShaderSourceCode;
@@ -26,12 +26,12 @@ void jlg::Shader::InitializeShaderProgram(const GLchar* vertexShaderPath, const 
 	initialized = true;
 }
 
-void jlg::Shader::LoadUniformMatrix4fv(const GLchar* UniformName, glm::mat4& MatrixData) {
-	GLuint loc = glGetUniformLocation(this->Program, UniformName);
+void jlg::shader::LoadUniformMatrix4fv(const GLchar* UniformName, glm::mat4& MatrixData) {
+	GLuint loc = glGetUniformLocation(this->program, UniformName);
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(MatrixData));
 }
 
-void jlg::Shader::LoadVertexShader(const GLchar* vertexShaderSourceCode) {
+void jlg::shader::LoadVertexShader(const GLchar* vertexShaderSourceCode) {
 	GLint success;
 	GLchar infoLog[512];
 	this->vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -44,7 +44,7 @@ void jlg::Shader::LoadVertexShader(const GLchar* vertexShaderSourceCode) {
 	}
 }
 
-void jlg::Shader::LoadFragmentShader(const GLchar* fragmentShaderSourceCode) {
+void jlg::shader::LoadFragmentShader(const GLchar* fragmentShaderSourceCode) {
 	GLint success;
 	GLchar infoLog[512];
 	this->fragementShaderID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -57,16 +57,16 @@ void jlg::Shader::LoadFragmentShader(const GLchar* fragmentShaderSourceCode) {
 	}
 }
 
-void jlg::Shader::CreateProgram() {
+void jlg::shader::CreateProgram() {
 	GLint success;
 	GLchar infoLog[512];
-	this->Program = glCreateProgram();
-	glAttachShader(this->Program, this->vertexShaderID);
-	glAttachShader(this->Program, this->fragementShaderID);
-	glLinkProgram(this->Program);
-	glGetProgramiv(this->Program, GL_LINK_STATUS, &success);
+	this->program = glCreateProgram();
+	glAttachShader(this->program, this->vertexShaderID);
+	glAttachShader(this->program, this->fragementShaderID);
+	glLinkProgram(this->program);
+	glGetProgramiv(this->program, GL_LINK_STATUS, &success);
 	if (!success) {
-		glGetProgramInfoLog(this->Program, 512, NULL, infoLog);
+		glGetProgramInfoLog(this->program, 512, NULL, infoLog);
 		std::cerr << "ERROR::SHADERS::PROGRAM::LINK FAILED" << std::endl << infoLog << std::endl;
 	}
 	glDeleteShader(this->vertexShaderID);

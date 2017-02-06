@@ -17,7 +17,7 @@ void jlg::shape_mgr::add_shape_attrib(const GLuint& shape_id, const GLuint& Coun
 	_shapes[shape_id].add_attrib(Count);
 }
 
-void jlg::shape_mgr::buffer(const GLuint& generated_vao) {
+void jlg::shape_mgr::buffer() {
 	for (GLuint i = 0; i < _shapes.size(); i++) {
 		_shapes[i].buffer(_vertex_buffer_array_objs[i], _buffer_objs[i]);
 	}

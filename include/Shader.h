@@ -10,20 +10,21 @@
 #include<glm/gtc/type_ptr.hpp>
 #include"freader.h"
 namespace jlg {
-	class Shader {
+	class shader {
 	public:
-		GLuint Program;
-		Shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
-		Shader();
-		inline void UseProgram() const { 
+		GLuint program;
+		shader(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
+		shader();
+		inline void use_program() const { 
 			if (initialized) {
-				glUseProgram(this->Program);
+				glUseProgram(this->program);
 			} else {
 				std::cerr << "ERROR::SHADERS::INITIALIZATION::SHADER IS NOT INITIALIZED" << std::endl;
 				throw;
 			}
 		}
-		void InitializeShaderProgram(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
+		void init_shader_program(const GLchar* vertexShaderPath, const GLchar* fragmentShaderPath);
+		inline bool is_initialized() const { return initialized; }
 		void LoadUniformMatrix4fv(const GLchar* UniformName, glm::mat4& MatrixData);
 	protected:
 		void LoadVertexShader(const GLchar* vertexShaderSourceCode);

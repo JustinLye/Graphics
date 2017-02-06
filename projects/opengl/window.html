@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>jlg Docs - Window</title>
+</head>
+<body>
+    <a href="index.html">Index</a>
+    <h1>window.lib</h1>
+    <p>The window library consist of <a href="https://github.com/jlyee/opengl/blob/version2/include/jlg_window.h" target="_blank">jlg_window.h</a>.</p>
+    <h2>jlg_window.h</h2>
+    <p>The jlg_window header file declares <a href="#clear_color_struct">clear_color struct</a> and <a href="#window_class">Window class</a>. The <code>Window</code> class is defined in <a href="https://github.com/jlyee/opengl/blob/version2/src/jlg_window.cpp" target="_blank">jlg_window.cpp</a>.</p>
+    <h3 id="clear_color_struct">clear_color struct</h3>
+    <p>The primary function of the <code>clear_color</code> struct is to encapsulate RGBA values.</p>
+    <p>The <code>clear_color</code> struct contains four <code>GLfloat</code> members represent Red, Green, Blue, and Alpha values.</p>
+    <h3 id="window_class">Window class</h3>
+    <p>The primary function of the <code>Window</code> class is to serve as an interface to an OpenGL window.</p>
+    <p>When <code>Window</code> objects are constructed an internal method <code>_create_window()</code> is invoked. This method does several things.
+    First, a static boolean member property of the <code>Window</code> class called <code>_is_initialized</code> is evaluated. If <code>_is_initialized</code> is false, then the method <code>_init()</code> is invoked.
+    This method will initialize the GLFW system. Second, the internal member <code>_window</code> is set to a newly created <code>GLFWwindow*</code> via the <code>glfwCreateWindow()</code> method.
+    Third, a static boolean member propery of the <code>Window</code> class called <code>_is_first_window</code> is evaluated. If <code>_is_first_window</code> is true, then the GLEW system is initialized.
+    Finally, an internal member of the <code>Window</code> class called <code>_is_created</code> is set to the value of the expression <code>_window != nullptr</code>.</p>
+    <p>It is important to mention the viewport must be manually set with a call to the method <code>SetViewport()</code>. The background color of the window can be changed via the <code>SetColor()</code> method.
+    The method <code>Rendor()</code> will invoke two OpenGL methods <code>glClearColor()</code> and <code>glClear()</code>.</p>
+</body>
+</html>
