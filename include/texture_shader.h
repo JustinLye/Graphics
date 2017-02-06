@@ -17,7 +17,7 @@ namespace jlg {
 		inline void init_shader_program(const char* vertex_shader_path, const char* fragment_shader_path) {
 			_shader.init_shader_program(vertex_shader_path, fragment_shader_path);
 		}
-		inline void apply() { _shader.use_program(); _texture_mgr.set_uniform(); }
+		virtual inline void apply() { _shader.use_program(); _texture_mgr.set_uniform(); }
 	protected:
 		jlg::shader _shader;
 		jlg::texture_mgr _texture_mgr;

@@ -4,22 +4,17 @@
 #include<GLFW/glfw3.h>
 #include"window.h"
 #include"shape_mgr.h"
-#include"texture_shader.h"
-#include"camera_mgr.h"
-
-jlg::camera_mgr camera;
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
-void MouseMoveCallBack(GLFWwindow* window, double xpos, double ypos);
-void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+#include"shading_mgr.h"
 
 int main(int argc, char* argv[]) {
 	jlg::Window win(800, 600, "Window");
 	win.SetViewport();
 	jlg::shape_mgr shapes;
-	jlg::texture_shader shader("core.vs","core.frag");
-	camera.set_program_id(shader.program());
+	jlg::basic_shading_mgr shader("core.vs","core.frag");
 	win.SetColor(0.2f, 0.3f, 0.3f, 1.0f);
-	
+	jlg::camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+	jlg::camera_mgr::bind_camera(&camera, win.Handle());
+	jlg::camera_mgr::bind_camera(&camera, win.Handle());
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat cube_obj[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -73,9 +68,6 @@ int main(int argc, char* argv[]) {
 
 	shader.add_texture("container.jpg","texture_01");
 	
-	glfwSetKeyCallback(win.Handle(), KeyCallback);
-	glfwSetCursorPosCallback(win.Handle(), MouseMoveCallBack);
-	glfwSetScrollCallback(win.Handle(), MouseScrollCallback);
 	GLfloat delta_time = 0.0f;
 	GLfloat last_frame = 0.0f;
 	while (!glfwWindowShouldClose(win.Handle())) {
@@ -83,10 +75,9 @@ int main(int argc, char* argv[]) {
 		delta_time = current_frame - last_frame;
 		last_frame = current_frame;
 		glfwPollEvents();
-		camera.do_movement(delta_time);
+		jlg::camera_mgr::do_movement(delta_time);
 		win.Render();
 		shader.apply();
-		camera.update_mvp();
 		shapes.draw();
 		glfwSwapBuffers(win.Handle());
 	}
@@ -94,30 +85,3 @@ int main(int argc, char* argv[]) {
 	return EXIT_SUCCESS;
 }
 
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GL_TRUE);
-	if (key >= 0 && key < 1024) {
-		if (action == GLFW_PRESS)
-			camera.keys[key] = true;
-		else if (action == GLFW_RELEASE)
-			camera.keys[key] = false;
-	}
-}
-void MouseMoveCallBack(GLFWwindow* window, double xpos, double ypos) {
-	if (camera.first_mouse) {
-		camera.last_x = xpos;
-		camera.last_y = ypos;
-		camera.first_mouse = false;
-	}
-
-	GLfloat xoffset = xpos - camera.last_x;
-	GLfloat yoffset = camera.last_y - ypos;
-	camera.last_x = xpos;
-	camera.last_y = ypos;
-	camera.process_mouse_movement(xoffset, yoffset);
-
-}
-void MouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
-	camera.process_scroll(yoffset);
-}
