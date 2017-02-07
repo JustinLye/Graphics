@@ -10,6 +10,10 @@
 #include<glm/gtc/type_ptr.hpp>
 #include"jlg/base/freader.h"
 namespace jlg {
+	enum JLGshader {
+		JLG_SHADER_FILEPATH_UPDATE_VERTEX_SHADER = 0,
+		JLG_SHADER_FILEPATH_UPDATE_FRAGMENT_SHADER = 1
+	};
 	class shader {
 	public:
 		GLuint program;
@@ -27,13 +31,18 @@ namespace jlg {
 		inline bool is_initialized() const { return initialized; }
 		void LoadUniformMatrix4fv(const GLchar* UniformName, glm::mat4& MatrixData);
 	protected:
-		void LoadVertexShader(const GLchar* vertexShaderSourceCode);
-		void LoadFragmentShader(const GLchar* fragmentShaderSourceCode);
-		void CreateProgram();
+		bool LoadVertexShader(const GLchar* vertexShaderSourceCode);
+		bool LoadFragmentShader(const GLchar* fragmentShaderSourceCode);
+		bool CreateProgram();
 	private:
 		GLuint vertexShaderID;
 		GLuint fragementShaderID;
 		bool initialized;
+		bool handle_filepath_error(const GLchar* filepath);
+		bool resolve_filepath(JLGshader update_shader);
+		const char* _vertex_file_path;
+		const char* _fragment_file_path;
+
 		
 	};
 };

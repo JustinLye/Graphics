@@ -1,6 +1,9 @@
+
+
 #include"jlg/base/texture.h"
 #include<vector>
-
+#if !defined(__JLG_TEXTURE_MANAGER_HEADER__)
+#define __JLG_TEXTURE_MANAGER_HEADER__
 namespace jlg {
 	class texture_mgr {
 	public:
@@ -23,3 +26,4 @@ namespace jlg {
 		GLuint _next_index;
 	};
 };
+#endif

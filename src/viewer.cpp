@@ -1,4 +1,4 @@
-#include"../include/viewer.h"
+#include"jlg/viewing/viewer.h"
 
 jlg::viewer::viewer(
 	const GLuint& Width,

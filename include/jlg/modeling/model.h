@@ -9,7 +9,7 @@ namespace jlg {
 	class model : public shape {
 	public:
 		model(
-			GLfloat* data,
+			const GLfloat* data,
 			const GLuint& dimensions,
 			const GLuint& vertex_count,
 			const glm::vec3& init_position = glm::vec3(0.0f, 0.0f, 0.0f),

@@ -1,26 +1,16 @@
-#include<iostream>
-#include<stdexcept>
-#define GLEW_STATIC
-#include<GL/glew.h>
-#include<GLFW/glfw3.h>
-#include<jlg/jlgbase.h>
+
+#include<jlg/jlg.h>
 
 int main(int argc, char* argv[]) {
-	jlg::Window window(1600, 1200, "Window");
-	window.SetViewport();
-	window.SetColor(0.15, 0.25, 0.30, 1.0f);
-	jlg::camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-	jlg::camera_mgr::bind_camera(&camera, window.Handle(), 1600, 1200);
-	jlg::shape_mgr shapes;
-	GLuint shape_id;
-	jlg::add_triangle(shape_id, &shapes);
-	shapes.buffer();
-	while (!glfwWindowShouldClose(window.Handle())) {
-		glfwPollEvents();
-		window.Render();
-		shapes.draw();
-		glfwSwapBuffers(window.Handle());
-	}
+	jlg::model_viewer win(800, 600, "Window","shaders\\core.vs", "shaders\\core.frag");
+	win.window().SetColor(0.1f, 0.3f, 0.3f, 1.0f);
+	win.window().lock_cursor();
+	win.shader().add_texture("images\\container.jpg", "texture_01");
+	GLuint model_id;
+	win.models().add_model(
+		model_id,
+		jlg::JLG_SHAPE_3D_CUBE_VERTS, 
+		jlg::
 	return EXIT_SUCCESS;
 }
 

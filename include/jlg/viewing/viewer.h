@@ -1,9 +1,9 @@
 
 #if !defined(__JLG_VIEWER_HEADER__)
 #define __JLG_VIEWER_HEADER__
-#include"window.h"
-#include "shape_mgr.h"
-#include "shading_mgr.h"
+#include"jlg/base/window.h"
+#include "jlg/base/shape_mgr.h"
+#include "jlg/shading/shading_mgr.h"
 
 
 namespace jlg {

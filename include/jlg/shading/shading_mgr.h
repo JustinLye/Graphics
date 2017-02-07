@@ -1,11 +1,12 @@
 #include<glm/glm.hpp>
 #include<glm/gtc/matrix_transform.hpp>
 #include<glm/gtc/type_ptr.hpp>
-#if !defined(__JLG_SHADING_MANAGER_HEADER__)
-#define __JLG_SHADING_MANAGER_HEADER__
 #include"jlg/base/camera_mgr.h"
 #include"jlg/shading/texture_shader.h"
 #include"jlg/modeling/model_mgr.h"
+#if !defined(__JLG_SHADING_MANAGER_HEADER__)
+#define __JLG_SHADING_MANAGER_HEADER__
+
 namespace jlg {
 	class basic_shading_mgr : public texture_shader {
 	public:

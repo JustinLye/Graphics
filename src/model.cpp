@@ -3,7 +3,7 @@
 glm::mat4 jlg::model::_identity_matrix = glm::mat4();
 
 jlg::model::model(
-	GLfloat* data,
+	const GLfloat* data,
 	const GLuint& dimensions,
 	const GLuint& vertex_count,
 	const glm::vec3& init_position,
