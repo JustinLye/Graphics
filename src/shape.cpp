@@ -1,7 +1,7 @@
 #include"jlg/base/shape.h"
 
 
-jlg::vertex_data::vertex_data(GLfloat* data, const GLuint& Dimensions, const GLuint& Count) :
+jlg::vertex_data::vertex_data(const GLfloat* data, const GLuint& Dimensions, const GLuint& Count) :
 	_data(nullptr),
 	_dims(Dimensions),
 	_count(Count) {
@@ -27,7 +27,7 @@ jlg::vertex_data::~vertex_data() {
 	}
 }
 
-jlg::shape::shape(GLfloat* VertexData, const GLuint& Dimensions, const GLuint& VertexCount) :
+jlg::shape::shape(const GLfloat* VertexData, const GLuint& Dimensions, const GLuint& VertexCount) :
 	vertex_data(VertexData, Dimensions, VertexCount),
 	_next_index(0),
 	_total_count(0) {}
@@ -37,13 +37,26 @@ jlg::shape::shape(const vertex_data& copy_data) :
 	_next_index(0),
 	_total_count(0) {}
 
+jlg::shape::shape(const shape& copy_shape) :
+	vertex_data(copy_shape.vertices(), copy_shape.vertex_dims(), copy_shape.vertex_count()),
+	_next_index(0),
+	_total_count(0) {
+	for (GLuint i = 0; i < copy_shape.attribs.size(); i++) {
+		attribs.push_back(copy_shape.attribs[i]);
+		if(_next_index < copy_shape.attribs[i].index)
+			_next_index = copy_shape.attribs[i].index;
+		_total_count += attribs[i].count;
+	}
+	_next_index++;
+}
+
 void jlg::shape::add_attrib(const GLuint& Count) {
 	attribs.push_back(attribute(_next_index, Count, vertex_dims(), _total_count));
 	_next_index++;
 	_total_count += Count;
 }
 
-void jlg::shape::buffer(const GLuint& generated_vao, const GLuint& generated_vbo) {
+void jlg::shape::buffer(const GLuint& generated_vao, const GLuint& generated_vbo) const {
 	glBindVertexArray(generated_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, generated_vbo);
 	glBufferData(GL_ARRAY_BUFFER, this->vertex_size(), this->vertices(), GL_STATIC_DRAW);

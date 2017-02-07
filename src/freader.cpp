@@ -14,5 +14,6 @@ void jlg::FileContentToString(const char* filepath, std::string& content) {
 		content = fileStringStream.str();
 	} catch (std::ifstream::failure& e) {
 		std::cerr << "ERROR::FILE READER::FAILED TO READ FILE TO CHAR ARRAY" << std::endl;
+		std::cerr << e.what() << std::endl;
 	}
 }

@@ -8,7 +8,8 @@ namespace jlg {
 	class shape_mgr {
 	public:
 		shape_mgr();
-		virtual void gen_shape(GLuint& shape_id, GLfloat* data, const GLuint& Dimensions, const GLuint& Count);
+		virtual void add_shape(GLuint& shape_id, const GLfloat* data, const GLuint& Dimensions, const GLuint& Count);
+		virtual void add_shape(GLuint& shape_id, const shape& copy_shape);
 		virtual void add_shape_attrib(const GLuint& shape_id, const GLuint& Count);
 		virtual void buffer();
 		virtual void draw() const;

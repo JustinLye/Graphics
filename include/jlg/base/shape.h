@@ -11,11 +11,11 @@ namespace jlg {
 
 	class vertex_data {
 	public:
-		vertex_data(GLfloat* data, const GLuint& Dimensions, const GLuint& Count);
+		vertex_data(const GLfloat* data, const GLuint& Dimensions, const GLuint& Count);
 		vertex_data(const vertex_data& other);
 		~vertex_data();
 		inline GLsizeiptr vertex_size() const { return (_dims * _count) * sizeof(GLfloat); }
-		inline GLfloat* vertices() { return _data; }
+		inline GLfloat* vertices() const { return _data; }
 		inline GLuint vertex_count() const { return _count; }
 		inline GLuint vertex_dims() const { return _dims; }
 	private:
@@ -43,14 +43,20 @@ namespace jlg {
 			count(Count),
 			stride(Stride),
 			offset(Offset) {}
+		attribute(const attribute& copy_attrib) :
+			index(copy_attrib.index),
+			count(copy_attrib.count),
+			stride(copy_attrib.stride),
+			offset(copy_attrib.offset) {}
 	};
 
 	class shape : public vertex_data {
 	public:
-		shape(GLfloat* VertexData, const GLuint& Dimensions, const GLuint& VertexCount);
+		shape(const GLfloat* VertexData, const GLuint& Dimensions, const GLuint& VertexCount);
 		shape(const vertex_data& copy_data);
+		shape(const shape& copy_shape);
 		virtual void add_attrib(const GLuint& Count);
-		virtual void buffer(const GLuint& generated_vao, const GLuint& generated_vbo);
+		virtual void buffer(const GLuint& generated_vao, const GLuint& generated_vbo) const;
 		virtual void draw() const;
 	protected:
 		std::vector<attribute> attribs;

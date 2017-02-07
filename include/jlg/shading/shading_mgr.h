@@ -3,9 +3,9 @@
 #include<glm/gtc/type_ptr.hpp>
 #if !defined(__JLG_SHADING_MANAGER_HEADER__)
 #define __JLG_SHADING_MANAGER_HEADER__
-#include"camera_mgr.h"
-#include"texture_shader.h"
-#include"model_mgr.h"
+#include"jlg/base/camera_mgr.h"
+#include"jlg/shading/texture_shader.h"
+#include"jlg/modeling/model_mgr.h"
 namespace jlg {
 	class basic_shading_mgr : public texture_shader {
 	public:

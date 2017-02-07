@@ -2,7 +2,7 @@
 #if !defined(__JLG_CAMERA_MGR_HEADER__)
 #define __JLG_CAMERA_MGR_HEADER__
 
-#include "camera.h"
+#include "jlg/base/camera.h"
 #include<glm/gtc/type_ptr.hpp>
 
 namespace jlg {

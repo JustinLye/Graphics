@@ -2,7 +2,7 @@
 
 jlg::shape_mgr::shape_mgr() {}
 
-void jlg::shape_mgr::gen_shape(GLuint& shape_id, GLfloat* data, const GLuint& Dimensions, const GLuint& Count) {
+void jlg::shape_mgr::add_shape(GLuint& shape_id, const GLfloat* data, const GLuint& Dimensions, const GLuint& Count) {
 	GLuint vao;
 	GLuint vbo;
 	glGenVertexArrays(1, &vao);
@@ -10,6 +10,17 @@ void jlg::shape_mgr::gen_shape(GLuint& shape_id, GLfloat* data, const GLuint& Di
 	_vertex_buffer_array_objs.push_back(vao);
 	_buffer_objs.push_back(vbo);
 	_shapes.push_back(jlg::shape(data, Dimensions, Count));
+	shape_id = (GLuint)(_shapes.size() - 1);
+}
+
+void jlg::shape_mgr::add_shape(GLuint& shape_id, const shape& copy_shape) {
+	GLuint vao;
+	GLuint vbo;
+	glGenVertexArrays(1, &vao);
+	glGenBuffers(1, &vbo);
+	_vertex_buffer_array_objs.push_back(vao);
+	_buffer_objs.push_back(vbo);
+	_shapes.push_back(jlg::shape(copy_shape));
 	shape_id = (GLuint)(_shapes.size() - 1);
 }
 

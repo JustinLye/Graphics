@@ -1,4 +1,4 @@
-#include"shading_mgr.h"
+#include"jlg/shading/shading_mgr.h"
 
 jlg::basic_shading_mgr::basic_shading_mgr() :
 	texture_shader() {}

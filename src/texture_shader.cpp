@@ -1,4 +1,4 @@
-#include"texture_shader.h"
+#include"jlg/shading/texture_shader.h"
 
 jlg::texture_shader::texture_shader() :
 	_next_unit_id(0) {}

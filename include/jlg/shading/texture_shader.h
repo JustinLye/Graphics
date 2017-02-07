@@ -1,8 +1,8 @@
 #if !defined (__JLG_TEXTURE_SHADER_HEADER__)
 #define __JLG_TEXTURE_SHADER_HEADER__
 
-#include"shader.h"
-#include"texture_mgr.h"
+#include"jlg/base/shader.h"
+#include"jlg/base/texture_mgr.h"
 
 namespace jlg {
 	class texture_shader {
