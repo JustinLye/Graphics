@@ -4,7 +4,7 @@ jlg::model_mgr::model_mgr() {}
 
 void jlg::model_mgr::add_model(
 	GLuint& model_id,
-	GLfloat* data,
+	const GLfloat* data,
 	const GLuint& dimensions,
 	const GLuint& vertex_count,
 	const glm::vec3& init_position,

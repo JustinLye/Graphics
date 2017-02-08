@@ -8,9 +8,15 @@
 #define __JLG_SHAPE_HEADER__
 
 namespace jlg {
-
+	/* vertex_data class
+	   The primary function of the vertex data class is to be a container for vertices.
+	   The structure is an array of floats.
+	*/
 	class vertex_data {
 	public:
+		/* GLfloat array data is copied to newly allocated GLfloat array vertex_data::_data.
+		   The allocated memory is released when vertex_data is destructed.
+		*/
 		vertex_data(const GLfloat* data, const GLuint& Dimensions, const GLuint& Count);
 		vertex_data(const vertex_data& other);
 		~vertex_data();

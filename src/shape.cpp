@@ -1,6 +1,8 @@
 #include"jlg/base/shape.h"
 
-
+/* GLfloat array data is copied to newly allocated GLfloat array vertex_data::_data.
+The allocated memory is released when vertex_data is destructed.
+*/
 jlg::vertex_data::vertex_data(const GLfloat* data, const GLuint& Dimensions, const GLuint& Count) :
 	_data(nullptr),
 	_dims(Dimensions),
