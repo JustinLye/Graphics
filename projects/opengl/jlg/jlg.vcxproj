@@ -19,17 +19,40 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\jlg\jlg.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\camera.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\camera_mgr.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\freader.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\shader.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\shape.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\shape_mgr.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\texture.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\texture_mgr.h" />
+    <ClInclude Include="..\..\..\include\jlg\base\window.h" />
     <ClInclude Include="..\..\..\include\jlg\jlgbase.h" />
-    <ClInclude Include="..\..\..\include\jlg\jlgmodel.h" />
-    <ClInclude Include="..\..\..\include\jlg\jlgshading_mgr.h" />
-    <ClInclude Include="..\..\..\include\jlg\jlgviewer.h" />
+    <ClInclude Include="..\..\..\include\jlg\modeling\model.h" />
+    <ClInclude Include="..\..\..\include\jlg\modeling\model_mgr.h" />
+    <ClInclude Include="..\..\..\include\jlg\shading\shading_mgr.h" />
+    <ClInclude Include="..\..\..\include\jlg\shading\texture_shader.h" />
+    <ClInclude Include="..\..\..\include\jlg\viewing\viewer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\camera_mgr.cpp" />
+    <ClCompile Include="..\..\..\src\freader.cpp" />
     <ClCompile Include="..\..\..\src\jlg.cpp" />
+    <ClCompile Include="..\..\..\src\model.cpp" />
+    <ClCompile Include="..\..\..\src\model_mgr.cpp" />
+    <ClCompile Include="..\..\..\src\shader.cpp" />
+    <ClCompile Include="..\..\..\src\shading_mgr.cpp" />
+    <ClCompile Include="..\..\..\src\shape.cpp" />
+    <ClCompile Include="..\..\..\src\shape_mgr.cpp" />
+    <ClCompile Include="..\..\..\src\texture.cpp" />
+    <ClCompile Include="..\..\..\src\texture_mgr.cpp" />
+    <ClCompile Include="..\..\..\src\texture_shader.cpp" />
+    <ClCompile Include="..\..\..\src\viewer.cpp" />
+    <ClCompile Include="..\..\..\src\window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{77d9a1b2-d600-450f-a4d8-19e544d46a5d}</ProjectGuid>
+    <ProjectGuid>{bb38efca-414c-4644-98c6-9ef6c3f47d64}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>jlg</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -42,7 +65,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -81,13 +104,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\..\bin\</OutDir>
+    <OutDir>$(SolutionDir)..\..\bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\..\bin</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -100,7 +124,6 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;c:\glm;c:\glfw\include;c:\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>None</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,7 +133,6 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\bin</AdditionalLibraryDirectories>
-      <AdditionalDependencies>jlgwindow.lib;jlgcamera.lib;jlgshader.lib;jlgshape.lib;jlgtexture.lib;jlgmodel.lib;jlgshading_mgr.lib;jlgviewer.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

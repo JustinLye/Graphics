@@ -4,13 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "opengl", "opengl\opengl.vcxproj", "{F4F74A1A-29CF-482B-BE95-95BABEB4D7FA}"
-	ProjectSection(ProjectDependencies) = postProject
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D} = {77D9A1B2-D600-450F-A4D8-19E544D46A5D}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jlgbase", "jlgbase\jlgbase.vcxproj", "{3E833E0A-7D60-4C27-8882-FD8B890A574A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1C0DB2D8-85ED-47CC-9BC3-346511D567B0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jlgmodel", "jlgmodel\jlgmodel.vcxproj", "{D8AA1C41-8AA9-49A1-A22F-978F2EC6E4C4}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -49,24 +44,35 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jlgviewer", "jlgviewer\jlgv
 		{A12163E6-E4C6-4A4F-9566-0C697DF553E4} = {A12163E6-E4C6-4A4F-9566-0C697DF553E4}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jlg", "jlg\jlg.vcxproj", "{77D9A1B2-D600-450F-A4D8-19E544D46A5D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BAFCFA00-4045-4B8C-BFAB-53BD1E89B9B4} = {BAFCFA00-4045-4B8C-BFAB-53BD1E89B9B4}
-		{D8AA1C41-8AA9-49A1-A22F-978F2EC6E4C4} = {D8AA1C41-8AA9-49A1-A22F-978F2EC6E4C4}
-		{E5A1626C-198B-4C85-AF00-15176225411A} = {E5A1626C-198B-4C85-AF00-15176225411A}
-		{73E21471-7F58-4EFB-AF2A-E6CBE6ED62FE} = {73E21471-7F58-4EFB-AF2A-E6CBE6ED62FE}
-		{6E21DF90-A1F8-48FD-85C8-A28FCAA3D9D5} = {6E21DF90-A1F8-48FD-85C8-A28FCAA3D9D5}
-		{AFBFF2B5-CF92-458E-990E-AA4509CBB2D8} = {AFBFF2B5-CF92-458E-990E-AA4509CBB2D8}
-		{D1F1F9E5-CB9B-4B5A-93C2-8C03E14BF9CC} = {D1F1F9E5-CB9B-4B5A-93C2-8C03E14BF9CC}
-		{A12163E6-E4C6-4A4F-9566-0C697DF553E4} = {A12163E6-E4C6-4A4F-9566-0C697DF553E4}
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8991A567-B11F-44B2-9EBE-68C0C2478DDF}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\docs\index.html = ..\..\docs\index.html
+		..\..\docs\jlgdocs.css = ..\..\docs\jlgdocs.css
 		..\..\docs\shapes.html = ..\..\docs\shapes.html
 		..\..\docs\window.html = ..\..\docs\window.html
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "jlg", "jlg\jlg.vcxproj", "{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "classes", "classes", "{AF942488-52F4-4DB6-90B0-900620F53F21}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\docs\classes\camera.html = ..\..\docs\classes\camera.html
+		..\..\docs\classes\shader.html = ..\..\docs\classes\shader.html
+		..\..\docs\classes\shape.html = ..\..\docs\classes\shape.html
+		..\..\docs\classes\texture.html = ..\..\docs\classes\texture.html
+		..\..\docs\classes\viewer.html = ..\..\docs\classes\viewer.html
+		..\..\docs\classes\window.html = ..\..\docs\classes\window.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shaders", "shaders", "{465359CF-5569-4A3A-B399-0CB833437EA6}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\shaders\core.frag = ..\..\shaders\core.frag
+		..\..\shaders\core.vs = ..\..\shaders\core.vs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "control_libs", "control_libs", "{5B5C4E3A-D167-4ADF-88D2-55B0CC2897EC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "callbacks", "callbacks\callbacks.vcxproj", "{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -156,14 +162,22 @@ Global
 		{E5A1626C-198B-4C85-AF00-15176225411A}.Release|x64.Build.0 = Release|x64
 		{E5A1626C-198B-4C85-AF00-15176225411A}.Release|x86.ActiveCfg = Release|Win32
 		{E5A1626C-198B-4C85-AF00-15176225411A}.Release|x86.Build.0 = Release|Win32
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Debug|x64.ActiveCfg = Debug|x64
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Debug|x64.Build.0 = Debug|x64
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Debug|x86.ActiveCfg = Debug|Win32
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Debug|x86.Build.0 = Debug|Win32
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Release|x64.ActiveCfg = Release|x64
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Release|x64.Build.0 = Release|x64
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Release|x86.ActiveCfg = Release|Win32
-		{77D9A1B2-D600-450F-A4D8-19E544D46A5D}.Release|x86.Build.0 = Release|Win32
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Debug|x64.ActiveCfg = Debug|x64
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Debug|x64.Build.0 = Debug|x64
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Debug|x86.ActiveCfg = Debug|Win32
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Debug|x86.Build.0 = Debug|Win32
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Release|x64.ActiveCfg = Release|x64
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Release|x64.Build.0 = Release|x64
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Release|x86.ActiveCfg = Release|Win32
+		{BB38EFCA-414C-4644-98C6-9EF6C3F47D64}.Release|x86.Build.0 = Release|Win32
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Debug|x64.ActiveCfg = Debug|x64
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Debug|x64.Build.0 = Debug|x64
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Debug|x86.ActiveCfg = Debug|Win32
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Debug|x86.Build.0 = Debug|Win32
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Release|x64.ActiveCfg = Release|x64
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Release|x64.Build.0 = Release|x64
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Release|x86.ActiveCfg = Release|Win32
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -178,5 +192,7 @@ Global
 		{BAFCFA00-4045-4B8C-BFAB-53BD1E89B9B4} = {3006160B-C763-4278-B3B5-527DBE6E0463}
 		{A12163E6-E4C6-4A4F-9566-0C697DF553E4} = {3006160B-C763-4278-B3B5-527DBE6E0463}
 		{E5A1626C-198B-4C85-AF00-15176225411A} = {DBF9D61D-A939-4B5F-A87B-B6361910E383}
+		{AF942488-52F4-4DB6-90B0-900620F53F21} = {8991A567-B11F-44B2-9EBE-68C0C2478DDF}
+		{6D380B4B-C802-4D17-B62E-BEEDD00AA5B5} = {5B5C4E3A-D167-4ADF-88D2-55B0CC2897EC}
 	EndGlobalSection
 EndGlobal
