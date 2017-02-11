@@ -1,89 +1,101 @@
-#include"jlg/base/window.h"
+#include"jlg/window.h"
 
-bool jlg::Window::_is_initialized = false;
-bool jlg::Window::_is_first_window = true;
-jlg::Window::Window(const GLuint& Width, const GLuint& Height, const GLchar* Title, bool make_current) :
-	_window(nullptr),
-	_width(Width),
-	_height(Height),
-	_title(Title),
-	_screen_width(0),
-	_screen_height(0),
-	_is_created(false) {
-	std::cout << "calling create window\nchange test" << std::endl;
-	this->_create_window(make_current);
+const GLchar* jlg::ContextError::JLG_ERROR_MSG_WINDOW_CONTEXT_UNKNOWN = "error::ContextError::Unknown error occurred.";
+const GLchar* jlg::ContextError::JLG_ERROR_MSG_WINDOW_CONTEXT_INIT_GLEW = "error::ContextError::GLEW failed to be initialized.";
+const GLchar* jlg::ContextError::JLG_ERROR_MSG_WINDOW_CONTEXT_INIT_GLFW = "error::ContextError::GLFW failed to be initialized.";
+const GLchar* jlg::ContextError::JLG_ERROR_MSG_WINDOW_CONTEXT_CREATE = "error::ContextError::Window failed to be created.";
+const GLchar* jlg::ContextError::JLG_ERROR_MSG_WINDOW_CONTEXT_VIEWPORT = "error::ContextError::Failed to set viewport.";
+
+jlg::ContextError::ContextError(GLuint error_id) :
+	_msg(nullptr) {
+	switch (error_id) {
+	case JLG_ERROR_ID_WINDOW_CONTEXT_UNKNOWN:
+		_msg = JLG_ERROR_MSG_WINDOW_CONTEXT_UNKNOWN;
+		break;
+	case JLG_ERROR_ID_WINDOW_CONTEXT_INIT_GLEW:
+		_msg = JLG_ERROR_MSG_WINDOW_CONTEXT_INIT_GLEW;
+		break;
+	case JLG_ERROR_ID_WINDOW_CONTEXT_INIT_GLFW:
+		_msg = JLG_ERROR_MSG_WINDOW_CONTEXT_INIT_GLFW;
+		break;
+	case JLG_ERROR_ID_WINDOW_CONTEXT_CREATE:
+		_msg = JLG_ERROR_MSG_WINDOW_CONTEXT_CREATE;
+		break;
+	case JLG_ERROR_ID_WINDOW_CONTEXT_VIEWPORT:
+		_msg = JLG_ERROR_MSG_WINDOW_CONTEXT_VIEWPORT;
+		break;
+	default:
+		_msg = JLG_ERROR_MSG_WINDOW_CONTEXT_UNKNOWN;
+		break;
+	};
 }
+jlg::ContextError::ContextError(const GLchar* error_msg) : _msg(error_msg) {}
+jlg::ContextError::ContextError() : _msg(JLG_ERROR_MSG_WINDOW_CONTEXT_UNKNOWN) {}
 
-void jlg::Window::SetViewport() {
-	bool pre_reqs = true;
-	if (!_is_initialized) {
-		std::cerr << "system must be initialized" << std::endl;
-		pre_reqs = false;
-	}
-	if (!_is_created) {
-		std::cerr << "window must be created" << std::endl;
-		pre_reqs = false;
-	}
-	if(!pre_reqs)
-		return;
-	glfwGetFramebufferSize(_window, &_screen_width, &_screen_height);
-	glViewport(0,0, _screen_width, _screen_height);
-}
 
-void jlg::Window::SetColor(const GLfloat& Red, const GLfloat& Green, const GLfloat& Blue, const GLfloat& Alpha) {
-	_color.r = Red;
-	_color.g = Green;
-	_color.b = Blue;
-	_color.a = Alpha;
-}
+std::once_flag jlg::WindowContext::_glew_init;
+std::once_flag jlg::WindowContext::_glfw_init;
+std::once_flag jlg::WindowContext::_first_create;
 
-void jlg::Window::Render() const {
-	glClearColor(_color.r, _color.g, _color.b, _color.a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-}
-
-void jlg::Window::_create_window(bool make_current) {
-	std::cout << "window is being created" << std::endl;
-	if (!_is_initialized) {
-		_init();
-		_is_initialized = true;
-	}
-	_window = glfwCreateWindow(
-		this->_width,
-		this->_height,
-		this->_title,
-		nullptr,
-		nullptr);
-	if (make_current) {
-		glfwMakeContextCurrent(_window);
-	}
-	std::cout << std::boolalpha << _is_first_window << std::endl;
-	if (_is_first_window) {
-		GLFWwindow* curr_win = NULL;
-		if (!make_current) {
-			curr_win = glfwGetCurrentContext();
-			glfwMakeContextCurrent(_window);
-		}
+void jlg::WindowContext::_init_glew() {
+	try {
+		if(glewInit() != GLEW_OK)
+			throw;
 		glewExperimental = GL_TRUE;
-		glewInit();
 		glEnable(GL_DEPTH_TEST);
-		_is_first_window = false;
-		if (!make_current) {
-			glfwMakeContextCurrent(curr_win);
-		}
+	} catch (...) {
+		throw jlg::ContextError(JLG_ERROR_ID_WINDOW_CONTEXT_INIT_GLFW);
 	}
-	_is_created = _window != nullptr;
 }
 
-void jlg::Window::_init() const {
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+void jlg::WindowContext::_init_glfw() {
+	try {
+		glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	} catch (...) {
+		throw jlg::ContextError(JLG_ERROR_ID_WINDOW_CONTEXT_INIT_GLFW);
+	}
 }
 
+void jlg::WindowContext::_set_view_port(GLFWwindow* window) {
+	try {
+		int sw, sh;
+		glfwGetFramebufferSize(window, &sw, &sh);
+		glViewport(0,0, sw, sh);
+	} catch (...) {
+		throw jlg::ContextError(JLG_ERROR_ID_WINDOW_CONTEXT_VIEWPORT);
+	}
+}
 
-
-
+GLFWwindow* jlg::WindowContext::CreateWindow(
+	const GLuint& w,
+	const GLuint& h,
+	const GLchar* t) {
+	GLFWwindow* window = nullptr;
+	try {
+		std::call_once(_glfw_init, [&]() { _init_glfw(); });
+		GLFWwindow* current_context = glfwGetCurrentContext();
+		try {
+			window = glfwCreateWindow(w, h, t, nullptr, nullptr);
+			if (!window)
+				throw;
+			GLFWwindow* current_context = glfwGetCurrentContext();
+			glfwMakeContextCurrent(window);
+			std::call_once(_glew_init, [&]() { _init_glew(); });
+			_set_view_port(window);
+			if(current_context)
+				glfwMakeContextCurrent(current_context);
+		} catch (...) {
+			throw jlg::ContextError(JLG_ERROR_ID_WINDOW_CONTEXT_CREATE);
+		}
+	} catch (jlg::ContextError& e) {
+		std::cerr << e.what() << std::endl;
+		throw;
+	} catch (...) {
+		throw;
+	}
+	return window;
+}
