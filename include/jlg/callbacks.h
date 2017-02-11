@@ -1,10 +1,10 @@
-#include<iostream>
-#include<set>
+#include<vector>
+#define GLEW_STATIC
+#include<GL/glew.h>
+#include<GLFW/glfw3.h>
+
 #if !defined(__JLG_CALLBACKS_HEADER__)
 #define __JLG_CALLBACKS_HEADER__
-
-#include"jlg/base/camera.h"
-
 namespace jlg {
 	enum {
 		JLG_CBFUN_UNKNOWN = 0,

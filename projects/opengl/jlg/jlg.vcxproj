@@ -51,6 +51,9 @@
     <ClCompile Include="..\..\..\src\viewer.cpp" />
     <ClCompile Include="..\..\..\src\window.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{bb38efca-414c-4644-98c6-9ef6c3f47d64}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="jlg::camera" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEBAAAkAAAAEoEABAAAABQCgAAAAAAADQAAAAAAI=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::camera_mgr" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAYQhAAAAAAAAEAAAAAAAAAAAQACDABAAEAASAiCsA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\camera_mgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::shader" Collapsed="true">
+    <Position X="7.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAIACAABAAQQQAQAAAgAAAAHAAAAAABAAAAEAAIAE=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::vertex_data" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhAAAAAABAAACBAAAAAAAAAAAAAQAAAAAICAAAAAAgA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\shape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::shape" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAIAIAAAAAAAAAAAAABAAAAIBAI=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\shape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::shape_mgr" Collapsed="true">
+    <Position X="9.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAEAAAAAAAIAAEAAQAAAAAAAAABAAAAAARA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\shape_mgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::texture" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAQAAAAEAAAAFAAAAAAAAAggBAAAgAAgQAgA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::texture_unit" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>GAAAIAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::texture_mgr" Collapsed="true">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAABAYAgAAAIAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\texture_mgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::Window" Collapsed="true">
+    <Position X="9.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAoCIAAAAAQgAAACAApAAAAKEABoAKAAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::model" Collapsed="true">
+    <Position X="0.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAkAAAAAAQCAIACAACAEAAAAAAAIAAAIAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\modeling\model.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::model_mgr" Collapsed="true">
+    <Position X="9.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAQABAIQAAAAAAEAAAAAIABAAAAAAQI=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\modeling\model_mgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::basic_shading_mgr" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\shading\shading_mgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::model_shading_mgr" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAIAAAAAAAAAAAAAAAAAAAgAAAAAAAEAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\shading\shading_mgr.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::texture_shader" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQAAEAAAAAAIAAQIAABIAAAAAiAAAAAAACAAAAAAAAE=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\shading\texture_shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::viewer" Collapsed="true">
+    <Position X="7.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAIAAAAAAEAAECAAAAAABAIAQAAAGAEBAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\viewing\viewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="jlg::model_viewer" Collapsed="true">
+    <Position X="6" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAgAIAAQAAAEAAAAAAAAAABAIAQAAAGAMAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\viewing\viewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="jlg::attribute" Collapsed="true">
+    <Position X="6" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAABgAAAAAAAAAAAAAAAAEAAAABAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\shape.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="jlg::texture_info" Collapsed="true">
+    <Position X="9.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAABAEAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\texture.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="jlg::clear_color" Collapsed="true">
+    <Position X="7.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAoAQABAAAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\window.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="jlg::Camera_Movement" Collapsed="true">
+    <Position X="6" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAgAIAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\camera.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="jlg::JLGshader" Collapsed="true">
+    <Position X="7.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>C:\Users\Justin Lye\Documents\opengl\include\jlg\base\shader.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

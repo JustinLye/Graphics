@@ -1,37 +1,30 @@
 #include<iostream>
 #include"jlg/window.h"
+#include"jlg/event_manager.h"
 
-void kcb(GLFWwindow* window, int key, int action, int scancode, int mode);
-
-
-class cb {
-public:
-	GLFWwindow* cb_win;
-	void operator()() { std::cout << "cb call made from " << cb_win << std::endl; }
-};
-
-void CreateWindow(const GLchar* name, jlg::WindowContext* window) {
-	window = new jlg::WindowContext(800, 600, name, &jlg::ClearColor(0.1f, 0.3f, 0.3f, 1.0f), GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
+void test_cb(GLFWwindow* window, int key, int action, int scancode, int mode);
 
 int main(int argc, char* argv[]) {
-	jlg::WindowContext* w1 = nullptr;
-	std::thread t1(CreateWindow,"Window1", w1);
-	t1.join();
-	while (!glfwWindowShouldClose(w1->ContextHandle())) {
-		glfwPollEvents();
-		w1->ClearBuffer();
-		glfwSwapBuffers(w1->ContextHandle());
+	try {
+		GLFWwindow* window = jlg::WindowContext::CreateWindow(800, 600, "Window1");
+		jlg::WindowContext::CreateWindow(800, 600, "Window2");
+		glfwMakeContextCurrent(window);
+		glfwSetKeyCallback(window, jlg::event_manager::key_callback);
+		jlg::event_manager::Subscribe(window, jlg::JLG_EVENT_TYPE_KEY_INPUT, test_cb);
+		while (!glfwWindowShouldClose(window)) {
+			glfwPollEvents();
+			glClearColor(0.2f, 0.1f, 0.3f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			glfwSwapBuffers(window);
+		}
+	} catch (...) {
+		std::cout << "Error occurred" << std::endl;
+		return EXIT_FAILURE;
 	}
 	glfwTerminate();
-	delete w1;
 	return EXIT_SUCCESS;
 }
 
-void kcb(GLFWwindow* window, int key, int action, int scancode, int mode) {
-	cb* _tcb = nullptr;
-	_tcb = (cb*)glfwGetWindowUserPointer(window);
-	if (_tcb) {
-		_tcb->operator()();
-	}
+void test_cb(GLFWwindow* window, int key, int action, int scancode, int mode) {
+	std::cout << "test_cb" << std::endl;
 }
